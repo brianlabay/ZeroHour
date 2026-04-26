@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Guides — Zero Hour</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../site.css">
+  <style>
+    .cat-hero-bg { background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.08) 0%, transparent 70%); }
+    .cat-eyebrow { color: var(--gold); }
+
+    .faction-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .faction-card {
+      border: 1px solid rgba(201,168,76,0.15);
+      background: var(--dark2);
+      text-decoration: none;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .faction-card:hover { border-color: rgba(201,168,76,0.45); transform: translateY(-3px); }
+    .faction-card-top {
+      padding: 2rem 1.5rem 1rem;
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+      flex: 1;
+    }
+    .faction-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .faction-card-name {
+      font-family: 'Orbitron', monospace; font-size: 1rem;
+      font-weight: 700; color: var(--white); margin-bottom: 0.5rem;
+    }
+    .faction-card-sub {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.2em; color: var(--text-dim); text-transform: uppercase;
+    }
+    .faction-card-bottom {
+      padding: 0.75rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faction-unit-count {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.15em; color: var(--text-dim);
+    }
+    .faction-card-cta {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.1em; color: var(--gold);
+    }
+    /* Faction accent bars */
+    .faction-card.empire    { border-top: 2px solid rgba(200,200,200,0.4); }
+    .faction-card.rebels    { border-top: 2px solid rgba(192,57,43,0.6); }
+    .faction-card.republic  { border-top: 2px solid rgba(201,168,76,0.6); }
+    .faction-card.separatist{ border-top: 2px solid rgba(41,182,246,0.5); }
+    .faction-card.mercs     { border-top: 2px solid rgba(168,224,99,0.5); }
+
+    .live-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      font-family: 'Share Tech Mono', monospace; font-size: 0.5rem;
+      letter-spacing: 0.15em; padding: 0.2rem 0.5rem;
+      background: rgba(168,224,99,0.15); color: var(--green);
+      border: 1px solid rgba(168,224,99,0.3);
+    }
+  </style>
+</head>
+<body>
+<div id="starfield"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">ZH</a>
+    <ul class="nav-links">
+      <li class="nav-item"><a href="../battle-reports/battle-reports.html">Battle Reports</a></li>
+      <li class="nav-item"><a href="../army-lists/army-lists.html">Army Lists</a></li>
+      <li class="nav-item active"><a href="../units/units.html">Units</a></li>
+      <li class="nav-item"><a href="../painting/painting.html">Painting</a></li>
+      <li class="nav-item"><a href="../meta/meta.html">Meta</a></li>
+      <li class="nav-item"><a href="../pages/about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="cat-hero">
+  <div class="cat-hero-bg"></div>
+  <div class="cat-hero-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Units</span>
+    </div>
+    <p class="cat-eyebrow">// Unit Guides — All Factions //</p>
+    <h1 class="cat-title">Unit Guides</h1>
+    <p class="cat-sub">In-depth breakdowns for every unit across every faction</p>
+    <div class="cat-divider"></div>
+  </div>
+</div>
+
+<div class="cat-content">
+  <div class="cat-content-inner">
+
+    <div class="section-header">
+      <span class="section-label">Choose Your Faction</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="faction-grid">
+
+      <a class="faction-card empire" href="empire.html">
+        <div class="live-badge">1 GUIDE LIVE</div>
+        <div class="faction-card-top">
+          <span class="faction-icon">⚙️</span>
+          <div class="faction-card-name">Galactic Empire</div>
+          <div class="faction-card-sub">Order. Efficiency. Absolute control.</div>
+        </div>
+        <div class="faction-card-bottom">
+          <span class="faction-unit-count">Stormtroopers · Death Troopers · AT-ST + more</span>
+          <span class="faction-card-cta">VIEW →</span>
+        </div>
+      </a>
+
+      <a class="faction-card rebels" href="rebels.html">
+        <div class="faction-card-top">
+          <span class="faction-icon">⭐</span>
+          <div class="faction-card-name">Rebel Alliance</div>
+          <div class="faction-card-sub">Hope. Sacrifice. Hit and run.</div>
+        </div>
+        <div class="faction-card-bottom">
+          <span class="faction-unit-count">Rebel Troopers · Pathfinders · Wookiees + more</span>
+          <span class="faction-card-cta">VIEW →</span>
+        </div>
+      </a>
+
+      <a class="faction-card republic" href="republic.html">
+        <div class="faction-card-top">
+          <span class="faction-icon">🔆</span>
+          <div class="faction-card-name">Galactic Republic</div>
+          <div class="faction-card-sub">Courage. Discipline. For the Republic.</div>
+        </div>
+        <div class="faction-card-bottom">
+          <span class="faction-unit-count">Clone Troopers · ARC Troopers · LAAT/i + more</span>
+          <span class="faction-card-cta">VIEW →</span>
+        </div>
+      </a>
+
+      <a class="faction-card separatist" href="separatist.html">
+        <div class="faction-card-top">
+          <span class="faction-icon">⬡</span>
+          <div class="faction-card-name">Separatist Alliance</div>
+          <div class="faction-card-sub">Numbers. Relentless. Expendable.</div>
+        </div>
+        <div class="faction-card-bottom">
+          <span class="faction-unit-count">B1 Droids · Droidekas · AAT + more</span>
+          <span class="faction-card-cta">VIEW →</span>
+        </div>
+      </a>
+
+      <a class="faction-card mercs" href="mercenaries.html">
+        <div class="faction-card-top">
+          <span class="faction-icon">💰</span>
+          <div class="faction-card-name">Mercenaries</div>
+          <div class="faction-card-sub">Credits. Contracts. No allegiances.</div>
+        </div>
+        <div class="faction-card-bottom">
+          <span class="faction-unit-count">Boba Fett · IG-88 · Mandalorians + more</span>
+          <span class="faction-card-cta">VIEW →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ZERO HOUR</div>
+    <ul class="footer-links">
+      <li><a href="../battle-reports/battle-reports.html">Battle Reports</a></li>
+      <li><a href="../army-lists/army-lists.html">Army Lists</a></li>
+      <li><a href="../units/units.html">Units</a></li>
+      <li><a href="../painting/painting.html">Painting</a></li>
+      <li><a href="../meta/meta.html">Meta</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 · NOT AFFILIATED WITH FANTASY FLIGHT GAMES OR ATOMIC MASS GAMES</p>
+  </div>
+</footer>
+
+<script>
+  const sf = document.getElementById('starfield');
+  for (let i = 0; i < 140; i++) {
+    const s = document.createElement('div'); s.className='star';
+    const sz = Math.random()*2+0.4;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*5+2).toFixed(1)}s;--delay:-${(Math.random()*8).toFixed(1)}s;--min:${(Math.random()*0.1).toFixed(2)};--max:${(Math.random()*0.5+0.2).toFixed(2)};`;
+    sf.appendChild(s);
+  }
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';} });
+  },{threshold:0.1});
+  document.querySelectorAll('.faction-card').forEach(el=>{
+    el.style.opacity='0'; el.style.transform='translateY(20px)';
+    el.style.transition='opacity 0.6s ease, transform 0.6s ease';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
