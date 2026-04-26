@@ -16,7 +16,8 @@
 ============================================================ -->
 <header>
   <div class="header-bg"></div>
-  <div class="death-star-ring"></div>
+  <!-- Death Star hologram — replaces orbital rings -->
+  <canvas id="death-star-bg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;opacity:0.35;z-index:0;"></canvas>
 
   <p class="eyebrow">// Dispatches from the Galactic Front //</p>
   <h1 class="site-title"><span>ZERO</span>HOUR</h1>
@@ -26,6 +27,7 @@
   <div class="header-tags">
     <a class="tag" href="battle-reports/battle-reports.html">Battle Reports</a>
     <a class="tag" href="army-lists/army-lists.html">Army Lists</a>
+    <a class="tag" href="units/units.html">Unit Guides</a>
     <a class="tag" href="painting/painting.html">Painting Guides</a>
     <a class="tag" href="meta/meta.html">Meta Analysis</a>
     <a class="tag" href="pages/about.html">About</a>
@@ -69,6 +71,21 @@
             </div>
           </a>
           <div class="dropdown-more">More lists coming soon…</div>
+        </div>
+      </li>
+
+      <li class="nav-item has-content">
+        <a href="units/units.html">Units</a>
+        <div class="nav-dropdown">
+          <a class="live-dropdown-item" href="units/empire.html">
+            <div class="ldi-icon">⚙️</div>
+            <div>
+              <div class="ldi-cat">// Unit Guide · Galactic Empire</div>
+              <div class="ldi-title">Stormtroopers — Full Unit Breakdown</div>
+              <div class="ldi-meta">APR 2026 &nbsp;·&nbsp; 15 MIN READ</div>
+            </div>
+          </a>
+          <div class="dropdown-more">More factions coming soon…</div>
         </div>
       </li>
 
@@ -175,6 +192,21 @@
           </div>
         </a>
 
+        <a class="post-card live" href="army-lists/stormtroopers-guide.html">
+          <div class="card-thumb card-thumb-empire">
+            <img src="assets/images/stormtroopers.png" alt="Stormtroopers" style="object-fit:cover;width:100%;height:100%;object-position:center 20%;filter:brightness(0.8) contrast(1.05);">
+          </div>
+          <div class="card-body">
+            <p class="card-cat cat-list">// Unit Guide · Empire</p>
+            <h3>Stormtroopers — Full Unit Breakdown</h3>
+            <p>Red saves, Precise, Imperial March, and the super squad. Every upgrade rated, every build explained.</p>
+            <div class="card-footer">
+              <span>APR 2026 · 15 MIN</span>
+              <span class="card-read-more">READ →</span>
+            </div>
+          </div>
+        </a>
+
         <a class="post-card pending" href="pages/battle-report-pending.html">
           <div class="lock-badge">ARTICLE PENDING</div>
           <div class="card-thumb card-thumb-battle">
@@ -270,7 +302,7 @@
             <div class="widget-title">Browse by Faction</div>
             <ul class="faction-list">
               <li class="faction-item"><div style="display:flex;align-items:center;"><div class="faction-dot dot-rebel"></div>Rebel Alliance</div><span class="faction-count">0 posts</span></li>
-              <li class="faction-item"><div style="display:flex;align-items:center;"><div class="faction-dot dot-empire"></div>Galactic Empire</div><span class="faction-count">0 posts</span></li>
+              <li class="faction-item"><div style="display:flex;align-items:center;"><div class="faction-dot dot-empire"></div>Galactic Empire</div><span class="faction-count">1 post</span></li>
               <li class="faction-item"><div style="display:flex;align-items:center;"><div class="faction-dot dot-republic"></div>Galactic Republic</div><span class="faction-count">1 post</span></li>
               <li class="faction-item"><div style="display:flex;align-items:center;"><div class="faction-dot dot-sep"></div>Separatist Alliance</div><span class="faction-count">0 posts</span></li>
             </ul>
@@ -319,6 +351,7 @@
     <ul class="footer-links">
       <li><a href="battle-reports/battle-reports.html">Battle Reports</a></li>
       <li><a href="army-lists/army-lists.html">Army Lists</a></li>
+      <li><a href="units/units.html">Units</a></li>
       <li><a href="painting/painting.html">Painting</a></li>
       <li><a href="meta/meta.html">Meta</a></li>
     </ul>
@@ -327,6 +360,7 @@
 </footer>
 
 <script>
+  /* ── Starfield ── */
   const sf = document.getElementById('starfield');
   for (let i = 0; i < 180; i++) {
     const s = document.createElement('div');
@@ -335,6 +369,8 @@
     s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*4+2).toFixed(1)}s;--delay:-${(Math.random()*6).toFixed(1)}s;--min:${(Math.random()*0.2).toFixed(2)};--max:${(Math.random()*0.6+0.4).toFixed(2)};`;
     sf.appendChild(s);
   }
+
+  /* ── Scroll animate-in ── */
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
@@ -345,6 +381,141 @@
     el.style.transition='opacity 0.6s ease, transform 0.6s ease';
     observer.observe(el);
   });
+
+  /* ── Faction Hologram ── */
+  (function() {
+    const canvas = document.getElementById('death-star-bg');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      const size = Math.min(window.innerWidth, window.innerHeight, 700);
+      canvas.width = size;
+      canvas.height = size;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const G = (a) => `rgba(201,168,76,${a})`;
+
+    /* Drawing helpers */
+    function circle(x,y,r,alpha,lw=1){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.strokeStyle=G(alpha);ctx.lineWidth=lw;ctx.stroke();}
+    function line(x1,y1,x2,y2,alpha,lw=0.8){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=G(alpha);ctx.lineWidth=lw;ctx.stroke();}
+    function poly(pts,alpha,lw=0.8){ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.closePath();ctx.strokeStyle=G(alpha);ctx.lineWidth=lw;ctx.stroke();}
+    function fillCircle(x,y,r,alpha){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=G(alpha);ctx.fill();}
+
+    /* Empire — 8-spoke cog */
+    function drawEmpire(x,y,R,alpha) {
+      const spokes=8;
+      circle(x,y,R,alpha*0.9,1.2);
+      circle(x,y,R*0.72,alpha*0.65,0.8);
+      circle(x,y,R*0.3,alpha*0.55,0.8);
+      fillCircle(x,y,R*0.08,alpha*0.45);
+      for(let i=0;i<spokes;i++){
+        const a=Math.PI*2*i/spokes;
+        line(x+R*0.3*Math.cos(a),y+R*0.3*Math.sin(a),x+R*0.72*Math.cos(a),y+R*0.72*Math.sin(a),alpha*0.65);
+        const a1s=a-Math.PI/spokes*0.45, a1e=a+Math.PI/spokes*0.45;
+        const a2s=a-Math.PI/spokes*0.28, a2e=a+Math.PI/spokes*0.28;
+        poly([[x+R*0.72*Math.cos(a1s),y+R*0.72*Math.sin(a1s)],[x+R*0.72*Math.cos(a1e),y+R*0.72*Math.sin(a1e)],[x+R*0.98*Math.cos(a2e),y+R*0.98*Math.sin(a2e)],[x+R*0.98*Math.cos(a2s),y+R*0.98*Math.sin(a2s)]],alpha*0.5,0.7);
+      }
+    }
+
+    /* Republic — sunburst */
+    function drawRepublic(x,y,R,alpha) {
+      const rays=20;
+      circle(x,y,R,alpha*0.9,1.2);
+      circle(x,y,R*0.45,alpha*0.6,0.8);
+      fillCircle(x,y,R*0.12,alpha*0.45);
+      for(let i=0;i<rays;i++){
+        const a=Math.PI*2*i/rays;
+        const inner=i%2===0?R*0.45:R*0.55;
+        line(x+inner*Math.cos(a),y+inner*Math.sin(a),x+R*0.97*Math.cos(a),y+R*0.97*Math.sin(a),alpha*(i%2===0?0.65:0.3),i%2===0?0.9:0.5);
+      }
+      for(let i=0;i<10;i++){const a=Math.PI*2*i/10+Math.PI/10;line(x,y,x+R*0.38*Math.cos(a),y+R*0.38*Math.sin(a),alpha*0.25,0.5);}
+    }
+
+    /* Rebel — starbird */
+    function drawRebel(x,y,R,alpha) {
+      circle(x,y,R,alpha*0.9,1.2);
+      ctx.beginPath();ctx.ellipse(x,y-R*0.05,R*0.12,R*0.55,0,0,Math.PI*2);ctx.strokeStyle=G(alpha*0.65);ctx.lineWidth=0.9;ctx.stroke();
+      function wing(flip){
+        const f=flip?-1:1;
+        ctx.beginPath();
+        ctx.moveTo(x,y-R*0.18);
+        ctx.bezierCurveTo(x+f*R*0.25,y-R*0.45,x+f*R*0.72,y-R*0.55,x+f*R*0.85,y-R*0.3);
+        ctx.bezierCurveTo(x+f*R*0.78,y-R*0.1,x+f*R*0.5,y+R*0.05,x+f*R*0.28,y+R*0.2);
+        ctx.bezierCurveTo(x+f*R*0.18,y+R*0.32,x+f*R*0.08,y+R*0.42,x,y+R*0.5);
+        ctx.strokeStyle=G(alpha*0.7);ctx.lineWidth=1;ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x+f*R*0.15,y-R*0.05);
+        ctx.bezierCurveTo(x+f*R*0.45,y-R*0.28,x+f*R*0.68,y-R*0.2,x+f*R*0.72,y);
+        ctx.strokeStyle=G(alpha*0.35);ctx.lineWidth=0.6;ctx.stroke();
+      }
+      wing(false);wing(true);
+      for(let i=-2;i<=2;i++){const a=-Math.PI/2+i*0.22;line(x,y-R*0.52,x+R*0.09*Math.cos(a),y-R*0.52+R*0.12*Math.sin(a),alpha*0.5,0.7);}
+      fillCircle(x,y-R*0.52,R*0.04,alpha*0.45);
+    }
+
+    /* CIS — hex gear */
+    function drawCIS(x,y,R,alpha) {
+      const hex=n=>Array.from({length:n},(_,i)=>{const a=Math.PI/6+Math.PI/3*(i*(6/n));return[x+R*Math.cos(a),y+R*Math.sin(a)];});
+      poly(hex(6),alpha*0.9,1.2);
+      const inner=Array.from({length:6},(_,i)=>{const a=Math.PI/6+Math.PI/3*i;return[x+R*0.55*Math.cos(a),y+R*0.55*Math.sin(a)];});
+      poly(inner,alpha*0.55,0.8);
+      circle(x,y,R*0.2,alpha*0.55,0.8);
+      fillCircle(x,y,R*0.06,alpha*0.35);
+      for(let i=0;i<6;i++){
+        const a=Math.PI/6+Math.PI/3*i;
+        line(x+R*0.2*Math.cos(a),y+R*0.2*Math.sin(a),x+R*0.55*Math.cos(a),y+R*0.55*Math.sin(a),alpha*0.55);
+        const a2=a+Math.PI/6,mx=x+R*0.76*Math.cos(a),my=y+R*0.76*Math.sin(a);
+        line(mx-R*0.06*Math.cos(a2),my-R*0.06*Math.sin(a2),mx+R*0.06*Math.cos(a2),my+R*0.06*Math.sin(a2),alpha*0.35,0.6);
+      }
+      for(let i=0;i<6;i++){
+        const a1=Math.PI/6+Math.PI/3*i, a2=Math.PI/6+Math.PI/3*(i+1);
+        const mx=x+R*1.04*Math.cos((a1+a2)/2), my=y+R*1.04*Math.sin((a1+a2)/2);
+        ctx.beginPath();ctx.moveTo(x+R*Math.cos(a1),y+R*Math.sin(a1));
+        ctx.quadraticCurveTo(mx,my,x+R*Math.cos(a2),y+R*Math.sin(a2));
+        ctx.strokeStyle=G(alpha*0.25);ctx.lineWidth=0.6;ctx.stroke();
+      }
+    }
+
+    const factions = [drawEmpire, drawRepublic, drawRebel, drawCIS];
+    const CYCLE = 420, MORPH = 70;
+    let t = 0;
+
+    function easeInOut(v){return v<0.5?2*v*v:1-Math.pow(-2*v+2,2)/2;}
+
+    function loop(){
+      const W=canvas.width, H=canvas.height, cx=W/2, cy=H/2, R=W*0.38;
+      ctx.clearRect(0,0,W,H);
+
+      const frame=t%(CYCLE*factions.length);
+      const fIdx=Math.floor(frame/CYCLE);
+      const fFrame=frame%CYCLE;
+      const nextIdx=(fIdx+1)%factions.length;
+
+      let alpha=0.82, morphAlpha=0;
+      if(fFrame>CYCLE-MORPH){
+        const p=(fFrame-(CYCLE-MORPH))/MORPH;
+        alpha=0.82*(1-easeInOut(p));
+        morphAlpha=0.82*easeInOut(p);
+      }
+
+      const rot=fFrame*0.0025;
+      ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.translate(-cx,-cy);
+      factions[fIdx](cx,cy,R,alpha);
+      ctx.restore();
+
+      if(morphAlpha>0){
+        ctx.save();ctx.translate(cx,cy);ctx.rotate(rot*0.4);ctx.translate(-cx,-cy);
+        factions[nextIdx](cx,cy,R,morphAlpha);
+        ctx.restore();
+      }
+      t++;
+      requestAnimationFrame(loop);
+    }
+    loop();
+  })();
 </script>
 </body>
 </html>
