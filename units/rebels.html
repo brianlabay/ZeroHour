@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rebel Alliance — Zero Hour</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../site.css">
+  <style>
+    .cat-hero-bg  { background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(192,57,43,0.12) 0%, transparent 70%); }
+    .cat-eyebrow  { color: #ff2d1a; }
+    
+    /* Unit card grid */
+    .faction-section { margin-bottom: 4rem; }
+    .faction-header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.5rem; padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .faction-icon { font-size: 1.5rem; }
+    .faction-name {
+      font-family: 'Orbitron', monospace; font-size: 1rem;
+      font-weight: 700; color: var(--white);
+    }
+    .faction-count {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.2em; color: var(--text-dim); margin-left: auto;
+    }
+    .units-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .unit-card {
+      border: 1px solid rgba(201,168,76,0.15);
+      background: var(--dark2); position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .unit-card.live { cursor: pointer; }
+    .unit-card.live:hover { border-color: rgba(201,168,76,0.45); transform: translateY(-2px); }
+    .unit-card.pending { opacity: 0.6; }
+    .unit-card-header { padding: 1rem; flex: 1; }
+    .unit-card-name {
+      font-family: 'Orbitron', monospace; font-size: 0.75rem;
+      font-weight: 700; color: var(--white); margin-bottom: 0.35rem; line-height: 1.3;
+    }
+    .unit-card-role {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.55rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim);
+    }
+    .unit-card-footer {
+      padding: 0.6rem 1rem;
+      background: rgba(201,168,76,0.04);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .unit-card-pts {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--gold);
+    }
+    .unit-card-read {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.55rem;
+      letter-spacing: 0.1em; color: var(--green);
+    }
+    .unit-card-pending {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.55rem; color: var(--text-dim);
+    }
+    .lock-badge {
+      position: absolute; top: 0.5rem; right: 0.5rem;
+      font-family: 'Share Tech Mono', monospace; font-size: 0.45rem;
+      letter-spacing: 0.15em; padding: 0.15rem 0.4rem;
+      background: rgba(255,45,26,0.15); color: var(--red-glow);
+      border: 1px solid rgba(255,45,26,0.25);
+    }
+    /* Role colour tabs */
+    .unit-card[data-role="corps"]    { border-left: 3px solid rgba(41,182,246,0.5); }
+    .unit-card[data-role="sf"]       { border-left: 3px solid rgba(168,224,99,0.5); }
+    .unit-card[data-role="support"]  { border-left: 3px solid rgba(201,168,76,0.5); }
+    .unit-card[data-role="heavy"]    { border-left: 3px solid rgba(255,45,26,0.5); }
+    .unit-card[data-role="commander"]{ border-left: 3px solid rgba(240,204,110,0.6); }
+    .unit-card[data-role="operative"]{ border-left: 3px solid rgba(168,224,99,0.5); }
+    .role-legend {
+      display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem;
+    }
+    .role-chip {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.55rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.25rem 0.7rem; border: 1px solid;
+    }
+    .role-chip.corps    { color: var(--blue-glow); border-color: rgba(41,182,246,0.3); }
+    .role-chip.sf       { color: var(--green);     border-color: rgba(168,224,99,0.3); }
+    .role-chip.support  { color: var(--gold);      border-color: rgba(201,168,76,0.3); }
+    .role-chip.heavy    { color: var(--red-glow);  border-color: rgba(255,45,26,0.3); }
+    .role-chip.commander{ color: var(--gold-bright);border-color: rgba(240,204,110,0.4); }
+    .role-chip.operative{ color: var(--green);     border-color: rgba(168,224,99,0.3); }
+
+  </style>
+</head>
+<body>
+<div id="starfield"></div>
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">ZH</a>
+    <ul class="nav-links">
+      <li class="nav-item"><a href="../battle-reports/battle-reports.html">Battle Reports</a></li>
+      <li class="nav-item"><a href="../army-lists/army-lists.html">Army Lists</a></li>
+      <li class="nav-item active"><a href="../units/units.html">Units</a></li>
+      <li class="nav-item"><a href="../painting/painting.html">Painting</a></li>
+      <li class="nav-item"><a href="../meta/meta.html">Meta</a></li>
+      <li class="nav-item"><a href="../pages/about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="cat-hero">
+  <div class="cat-hero-bg"></div>
+  <div class="cat-hero-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="../units/units.html">Units</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Rebel Alliance</span>
+    </div>
+    <p class="cat-eyebrow">// Unit Guides · Rebel Alliance //</p>
+    <h1 class="cat-title">Rebel Alliance</h1>
+    <p class="cat-sub">Every unit, rated and broken down</p>
+    <div class="cat-divider"></div>
+  </div>
+</div>
+
+<div class="cat-content">
+  <div class="cat-content-inner">
+    <div class="role-legend">
+      <span class="role-chip commander">Commander</span>
+      <span class="role-chip operative">Operative</span>
+      <span class="role-chip corps">Corps</span>
+      <span class="role-chip sf">Special Forces</span>
+      <span class="role-chip support">Support</span>
+      <span class="role-chip heavy">Heavy</span>
+    </div>
+
+    <div class="faction-section">
+      <div class="section-header"><span class="section-label">Commanders</span><div class="section-line"></div></div>
+      <div class="units-grid">
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Luke Skywalker</div>
+            <div class="unit-card-role">Commander</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">160 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Han Solo</div>
+            <div class="unit-card-role">Commander</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">95 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Leia Organa</div>
+            <div class="unit-card-role">Commander</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">90 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Obi-Wan Kenobi</div>
+            <div class="unit-card-role">Commander</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">130 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faction-section">
+      <div class="section-header"><span class="section-label">Operatives</span><div class="section-line"></div></div>
+      <div class="units-grid">
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Luke Skywalker (Operative)</div>
+            <div class="unit-card-role">Operative</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">130 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Chewbacca</div>
+            <div class="unit-card-role">Operative</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">110 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">R2-D2</div>
+            <div class="unit-card-role">Operative</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">60 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Hondo Ohnaka</div>
+            <div class="unit-card-role">Operative</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">90 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faction-section">
+      <div class="section-header"><span class="section-label">Corps</span><div class="section-line"></div></div>
+      <div class="units-grid">
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Rebel Troopers</div>
+            <div class="unit-card-role">Corps</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">40 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Rebel Veterans</div>
+            <div class="unit-card-role">Corps</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">56 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Rebel Commandos</div>
+            <div class="unit-card-role">Corps</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">52 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faction-section">
+      <div class="section-header"><span class="section-label">Special Forces</span><div class="section-line"></div></div>
+      <div class="units-grid">
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Fleet Troopers</div>
+            <div class="unit-card-role">Special Forces</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">44 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Pathfinders</div>
+            <div class="unit-card-role">Special Forces</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">72 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Rebel Commandos Strike Team</div>
+            <div class="unit-card-role">Special Forces</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">52 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Wookiee Warriors</div>
+            <div class="unit-card-role">Special Forces</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">90 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faction-section">
+      <div class="section-header"><span class="section-label">Support</span><div class="section-line"></div></div>
+      <div class="units-grid">
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">Tauntaun Riders</div>
+            <div class="unit-card-role">Support</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">90 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">AT-RT</div>
+            <div class="unit-card-role">Support</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">55 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faction-section">
+      <div class="section-header"><span class="section-label">Heavy</span><div class="section-line"></div></div>
+      <div class="units-grid">
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">1.4 FD Laser Cannon Team</div>
+            <div class="unit-card-role">Heavy</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">90 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+                <div class="unit-card pending">
+          <div class="lock-badge">PENDING</div>
+          <div class="unit-card-header">
+            <div class="unit-card-name">A-A5 Speeder Truck</div>
+            <div class="unit-card-role">Heavy</div>
+          </div>
+          <div class="unit-card-footer">
+            <span class="unit-card-pts">120 pts</span>
+            <span class="unit-card-pending">Guide coming soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ZERO HOUR</div>
+    <ul class="footer-links">
+      <li><a href="../battle-reports/battle-reports.html">Battle Reports</a></li>
+      <li><a href="../army-lists/army-lists.html">Army Lists</a></li>
+      <li><a href="../units/units.html">Units</a></li>
+      <li><a href="../painting/painting.html">Painting</a></li>
+      <li><a href="../meta/meta.html">Meta</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 · NOT AFFILIATED WITH FANTASY FLIGHT GAMES OR ATOMIC MASS GAMES</p>
+  </div>
+</footer>
+<script>
+  const sf = document.getElementById('starfield');
+  for (let i = 0; i < 140; i++) {
+    const s = document.createElement('div'); s.className='star';
+    const sz = Math.random()*2+0.4;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*5+2).toFixed(1)}s;--delay:-${(Math.random()*8).toFixed(1)}s;--min:${(Math.random()*0.1).toFixed(2)};--max:${(Math.random()*0.5+0.2).toFixed(2)};`;
+    sf.appendChild(s);
+  }
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';} });
+  },{threshold:0.1});
+  document.querySelectorAll('.post-card,.unit-card').forEach(el=>{
+    el.style.opacity='0'; el.style.transform='translateY(20px)';
+    el.style.transition='opacity 0.6s ease, transform 0.6s ease';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
