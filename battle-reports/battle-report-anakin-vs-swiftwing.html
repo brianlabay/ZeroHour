@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anakin Quells the Rebellion — Zero Hour</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#c9a84c;--gold-bright:#f0cc6e;--red:#c0392b;--red-glow:#ff2d1a;--blue-glow:#29b6f6;--green:#a8e063;--dark:#060810;--dark2:#0b0f1a;--dark3:#111827;--text:#ccc8be;--text-dim:#7a7a8a;--white:#f0ede6}
+html{scroll-behavior:smooth}
+body{font-family:'Rajdhani',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;z-index:1000;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px)}
+#starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
+.star{position:absolute;border-radius:50%;background:white;animation:twinkle var(--d,3s) ease-in-out infinite var(--delay,0s)}
+@keyframes twinkle{0%,100%{opacity:var(--min,0.1)}50%{opacity:var(--max,0.7)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+nav{position:sticky;top:0;z-index:100;background:rgba(6,8,16,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,0.15);padding:0 2rem}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-logo{font-family:'Orbitron',monospace;font-size:0.8rem;font-weight:700;letter-spacing:0.1em;color:var(--gold);text-decoration:none}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover,.nav-links .active a{color:var(--gold)}
+.cw-titlecard{position:relative;z-index:10;background:#000;padding:3rem 2rem;text-align:center;border-bottom:3px solid #f0cc6e}
+.cw-crawl{font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:0.4em;color:#f0cc6e;text-transform:uppercase;margin-bottom:1.5rem;opacity:0.7}
+.cw-quote{font-family:'Rajdhani',sans-serif;font-style:italic;font-size:1.2rem;line-height:1.7;color:#f0ede6;max-width:600px;margin:0 auto 0.75rem;opacity:0.9}
+.cw-quote::before{content:'\201C';font-size:2rem;color:#f0cc6e;line-height:0;vertical-align:-0.5rem;margin-right:0.25rem}
+.cw-quote::after{content:'\201D';font-size:2rem;color:#f0cc6e;line-height:0;vertical-align:-0.5rem;margin-left:0.25rem}
+.cw-attribution{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;color:#c9a84c;text-transform:uppercase;margin-bottom:2rem}
+.cw-synopsis{font-family:'Rajdhani',sans-serif;font-size:1rem;line-height:1.8;color:#7a7a8a;max-width:680px;margin:0 auto;letter-spacing:0.03em}
+.cw-synopsis strong{color:#f0cc6e}
+.article-hero{position:relative;z-index:10;padding:5rem 2rem 3rem;max-width:1100px;margin:0 auto;border-bottom:1px solid rgba(201,168,76,0.1)}
+.breadcrumb{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;color:var(--text-dim);text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:0.75rem}
+.breadcrumb a{color:var(--gold);text-decoration:none}
+.breadcrumb-sep{color:var(--text-dim)}
+.article-category{font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.35em;color:var(--red-glow);text-transform:uppercase;margin-bottom:1.25rem}
+.article-title{font-family:'Orbitron',monospace;font-size:clamp(1.6rem,4vw,3rem);font-weight:900;line-height:1.15;color:var(--white);max-width:800px;margin-bottom:2rem;opacity:0;animation:fadeUp 0.7s ease forwards 0.1s}
+.article-meta-row{display:flex;flex-wrap:wrap;align-items:center;gap:1.5rem;margin-bottom:2rem;opacity:0;animation:fadeUp 0.7s ease forwards 0.25s}
+.meta-chip{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;display:flex;align-items:center;gap:0.4rem}
+.meta-chip-icon{color:var(--gold)}
+.meta-divider{width:1px;height:14px;background:rgba(201,168,76,0.2)}
+.article-tags{display:flex;gap:0.5rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.7s ease forwards 0.4s}
+.atag{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;padding:0.25rem 0.7rem;border:1px solid rgba(201,168,76,0.25);color:var(--gold);text-transform:uppercase}
+.article-layout{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 280px;gap:4rem;padding:3rem 2rem 6rem;position:relative;z-index:10}
+.article-body{max-width:720px}
+.article-lead{font-size:1.15rem;line-height:1.8;color:var(--text);padding:1.5rem 1.5rem 1.5rem 2rem;border-left:2px solid var(--gold);background:rgba(201,168,76,0.04);margin-bottom:2.5rem;font-weight:600}
+.article-body p{font-size:1rem;line-height:1.85;color:var(--text);margin-bottom:1.4rem}
+.article-body h2{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:700;color:var(--white);margin:3rem 0 1.25rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(201,168,76,0.15);display:flex;align-items:center;gap:0.75rem}
+.article-body h2::before{content:'//';font-family:'Share Tech Mono',monospace;font-size:0.75rem;color:var(--gold);flex-shrink:0}
+.article-body h3{font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:700;color:var(--gold);margin:2rem 0 0.75rem;letter-spacing:0.05em}
+.match-info{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;margin:2rem 0;padding:1.5rem;border:1px solid rgba(201,168,76,0.2);background:var(--dark2)}
+.match-faction{text-align:center}
+.match-faction-label{font-family:'Share Tech Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:0.4rem}
+.match-faction-name{font-family:'Orbitron',monospace;font-size:0.9rem;font-weight:700;color:var(--white)}
+.match-faction-commander{font-size:0.8rem;color:var(--text-dim);margin-top:0.2rem}
+.match-vs{font-family:'Orbitron',monospace;font-size:1.2rem;font-weight:900;color:var(--gold);text-align:center}
+.match-result{display:flex;justify-content:center;gap:2rem;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(201,168,76,0.1);grid-column:1/-1;flex-wrap:wrap}
+.match-result-item{text-align:center}
+.match-result-label{font-family:'Share Tech Mono',monospace;font-size:0.5rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:0.25rem}
+.match-result-val{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:700}
+.result-win{color:var(--green)}
+.result-loss{color:var(--red-glow)}
+.army-summary{border:1px solid rgba(201,168,76,0.15);background:var(--dark3);margin:2rem 0;overflow:hidden}
+.army-summary-header{background:rgba(201,168,76,0.08);padding:0.75rem 1.25rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(201,168,76,0.12)}
+.army-summary-name{font-family:'Orbitron',monospace;font-size:0.8rem;font-weight:700;color:var(--gold)}
+.army-summary-pts{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-dim)}
+.army-entry{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.85rem}
+.army-entry:last-child{border-bottom:none}
+.army-entry-name{color:var(--text)}
+.army-entry-pts{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--gold)}
+.army-entry-sub{font-size:0.75rem;color:var(--text-dim);margin-top:0.1rem}
+.army-total{display:flex;justify-content:space-between;padding:0.6rem 1.25rem;border-top:1px solid rgba(201,168,76,0.15);background:rgba(201,168,76,0.04)}
+.army-total span{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--gold);letter-spacing:0.1em}
+.turn-block{border:1px solid rgba(201,168,76,0.15);margin:2rem 0;overflow:hidden}
+.turn-header{display:flex;align-items:center;gap:1rem;padding:0.75rem 1.25rem;background:rgba(201,168,76,0.08);border-bottom:1px solid rgba(201,168,76,0.12)}
+.turn-num{font-family:'Orbitron',monospace;font-size:1.2rem;font-weight:900;color:var(--gold);flex-shrink:0}
+.turn-title{font-family:'Orbitron',monospace;font-size:0.75rem;font-weight:700;color:var(--white)}
+.turn-body{padding:1.25rem}
+.turn-body p{font-size:0.95rem;line-height:1.75;color:var(--text);margin-bottom:1rem}
+.turn-body p:last-child{margin-bottom:0}
+.turn-body h3{font-family:'Orbitron',monospace;font-size:0.75rem;font-weight:700;color:var(--gold);margin:1.5rem 0 0.6rem;letter-spacing:0.05em}
+.turn-body h3:first-child{margin-top:0}
+.score-track{display:flex;gap:0.75rem;margin:1rem 0;flex-wrap:wrap}
+.score-chip{flex:1;min-width:70px;border:1px solid rgba(201,168,76,0.15);background:var(--dark2);padding:0.6rem;text-align:center}
+.score-chip-label{font-family:'Share Tech Mono',monospace;font-size:0.48rem;letter-spacing:0.15em;color:var(--text-dim);text-transform:uppercase;margin-bottom:0.25rem}
+.score-chip-val{font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:900;color:var(--gold)}
+.score-chip-val.my-score{color:var(--green)}
+.score-chip-val.opp-score{color:var(--red-glow)}
+.activation{display:flex;gap:1rem;align-items:flex-start;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.activation:last-child{border-bottom:none}
+.activation-unit{font-family:'Orbitron',monospace;font-size:0.68rem;font-weight:700;color:var(--white);flex-shrink:0;width:150px;padding-top:0.1rem}
+.activation-detail{font-size:0.875rem;line-height:1.6;color:var(--text-dim);flex:1}
+.activation-detail strong{color:var(--white)}
+.activation-result{flex-shrink:0;font-family:'Share Tech Mono',monospace;font-size:0.58rem;padding:0.2rem 0.6rem;border:1px solid;white-space:nowrap;margin-top:0.1rem}
+.activation-result.good{color:var(--green);border-color:rgba(168,224,99,0.4)}
+.activation-result.bad{color:var(--red-glow);border-color:rgba(255,45,26,0.3)}
+.activation-result.neutral{color:var(--gold);border-color:rgba(201,168,76,0.3)}
+.callout{border:1px solid rgba(201,168,76,0.2);background:var(--dark2);padding:1.5rem;margin:2rem 0;position:relative}
+.callout::before{content:attr(data-label);position:absolute;top:0;left:1.5rem;transform:translateY(-50%);font-family:'Share Tech Mono',monospace;font-size:0.55rem;letter-spacing:0.3em;padding:0.2rem 0.6rem;background:var(--gold);color:var(--dark);text-transform:uppercase}
+.callout p{margin-bottom:0;font-size:0.95rem;color:var(--text-dim)}
+.callout strong{color:var(--white)}
+.callout-tip{border-color:rgba(168,224,99,0.25)}
+.callout-tip::before{background:var(--green);color:var(--dark)}
+.callout-warning{border-color:rgba(255,45,26,0.3)}
+.callout-warning::before{background:var(--red-glow);color:var(--white)}
+.key-point{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.key-point:last-child{border-bottom:none}
+.key-num{font-family:'Orbitron',monospace;font-size:1.5rem;font-weight:900;color:rgba(201,168,76,0.2);flex-shrink:0;width:2rem;line-height:1}
+.key-text{font-size:0.95rem;line-height:1.7;color:var(--text)}
+.key-text strong{color:var(--white)}
+.art-divider{display:flex;align-items:center;gap:1rem;margin:3rem 0}
+.art-divider-line{flex:1;height:1px;background:rgba(201,168,76,0.12)}
+.art-divider-icon{color:var(--gold);font-size:0.7rem;letter-spacing:0.3em;font-family:'Share Tech Mono',monospace}
+.verdict{border:1px solid rgba(201,168,76,0.3);background:linear-gradient(135deg,rgba(201,168,76,0.06) 0%,transparent 60%);padding:2rem;margin-top:3rem;position:relative;overflow:hidden}
+.verdict::after{content:'VERDICT';position:absolute;right:-1rem;top:50%;transform:translateY(-50%) rotate(90deg);font-family:'Orbitron',monospace;font-size:4rem;font-weight:900;color:rgba(201,168,76,0.04);letter-spacing:0.2em;white-space:nowrap}
+.verdict-label{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem}
+.verdict p{font-size:1rem;line-height:1.8;color:var(--text-dim)}
+.verdict p strong{color:var(--white)}
+.faction-flavor{margin:2.5rem 0 1rem;padding:1rem 1.25rem;border-left:3px solid rgba(201,168,76,0.4);background:rgba(201,168,76,0.04)}
+.faction-flavor-label{font-family:'Share Tech Mono',monospace;font-size:0.5rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:0.4rem}
+.faction-flavor-text{font-family:'Rajdhani',sans-serif;font-style:italic;font-size:0.9rem;line-height:1.6;color:var(--text-dim)}
+.faction-flavor.rebel{border-left-color:rgba(255,45,26,0.5);background:rgba(255,45,26,0.03)}
+.faction-flavor.rebel .faction-flavor-label{color:var(--red-glow)}
+.article-sidebar{padding-top:0.5rem}
+.sidebar-widget{border:1px solid rgba(201,168,76,0.12);background:var(--dark2);padding:1.25rem;margin-bottom:1.5rem}
+.widget-label{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(201,168,76,0.12)}
+.toc-list{list-style:none}
+.toc-item{padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.toc-item:last-child{border-bottom:none}
+.toc-item a{font-family:'Rajdhani',sans-serif;font-size:0.85rem;font-weight:600;color:var(--text-dim);text-decoration:none;transition:color 0.2s}
+.toc-item a:hover{color:var(--white)}
+.list-entry{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.8rem}
+.list-entry:last-child{border-bottom:none}
+.list-entry-name{color:var(--text)}
+.list-entry-pts{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--gold)}
+.share-row{display:flex;gap:0.5rem;flex-wrap:wrap}
+.share-btn{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;padding:0.4rem 0.9rem;border:1px solid rgba(201,168,76,0.2);color:var(--text-dim);cursor:pointer;background:transparent;text-transform:uppercase;transition:all 0.2s}
+.share-btn:hover{border-color:var(--gold);color:var(--gold)}
+.related-post{padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.related-post:last-child{border-bottom:none}
+.related-cat{font-family:'Share Tech Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;color:var(--blue-glow);text-transform:uppercase;margin-bottom:0.3rem}
+.related-title{font-size:0.85rem;font-weight:600;color:var(--text-dim);line-height:1.4;transition:color 0.2s}
+.related-post:hover .related-title{color:var(--white)}
+footer{position:relative;z-index:10;padding:2.5rem 2rem;border-top:1px solid rgba(201,168,76,0.1)}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:'Orbitron',monospace;font-size:0.9rem;font-weight:700;color:var(--gold)}
+.footer-links{display:flex;gap:1.5rem;list-style:none}
+.footer-links a{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--text-dim);text-decoration:none;text-transform:uppercase}
+.footer-copy{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;color:var(--text-dim)}
+@media(max-width:860px){.article-layout{grid-template-columns:1fr}.article-sidebar{display:none}}
+@media(max-width:600px){.match-info{grid-template-columns:1fr;text-align:center}.activation{flex-direction:column}.activation-unit{width:auto}.meta-divider{display:none}}
+  </style>
+</head>
+<body>
+<div id="starfield"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">ZH</a>
+    <ul class="nav-links">
+      <li class="active"><a href="../battle-reports/battle-reports.html">Battle Reports</a></li>
+      <li><a href="../army-lists/army-lists.html">Army Lists</a></li>
+      <li><a href="../units/units.html">Units</a></li>
+      <li><a href="../painting/painting.html">Painting</a></li>
+      <li><a href="../meta/meta.html">Meta</a></li>
+      <li><a href="../pages/about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- CLONE WARS TITLE CARD -->
+<div class="cw-titlecard">
+  <div class="cw-crawl">// Imperial Dispatch · 501st Legion · Eyes Only</div>
+  <p class="cw-quote">The Rebels call it a war of liberation. I call it an inconvenience.</p>
+  <div class="cw-attribution">— Lord Vader, Commander of the 501st Legion</div>
+  <p class="cw-synopsis">
+    <strong>The Outer Rim. A contested world.</strong> Anakin Skywalker — unburnt, unbroken, and loyal to the Empire by his own choosing — leads the 501st Legion on a seek-and-destroy operation against an Alliance cell operating out of enemy-held territory. Five listening posts. One prisoner exchange. And a Rebel commander on a Tauntaun who thinks speed is a substitute for strategy. He is about to be corrected.
+  </p>
+</div>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="../battle-reports/battle-reports.html">Battle Reports</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Republic vs Rebels</span>
+  </div>
+  <p class="article-category">// Battle Report · Galactic Republic vs Rebel Alliance</p>
+  <h1 class="article-title">Anakin Quells the Rebellion — 501st Legion vs Swiftwing's Rebels on Contact, Contact!</h1>
+  <div class="article-meta-row">
+    <div class="meta-chip"><span class="meta-chip-icon">◆</span> APR 2026</div>
+    <div class="meta-divider"></div>
+    <div class="meta-chip"><span class="meta-chip-icon">◆</span> 10 MIN READ</div>
+    <div class="meta-divider"></div>
+    <div class="meta-chip"><span class="meta-chip-icon">◆</span> WIN 7–3</div>
+    <div class="meta-divider"></div>
+    <div class="meta-chip"><span class="meta-chip-icon">◆</span> 3 ROUNDS</div>
+  </div>
+  <div class="article-tags">
+    <span class="atag">Galactic Republic</span>
+    <span class="atag">Rebel Alliance</span>
+    <span class="atag">Anakin Skywalker</span>
+    <span class="atag">501st Legion</span>
+    <span class="atag">Delta Squad</span>
+    <span class="atag">Contact Contact</span>
+    <span class="atag">Failed Negotiations</span>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="article-layout">
+<article class="article-body">
+
+  <p class="article-lead">Owen called it after round 3, score 7–3. One of those games where the plan actually held together from start to finish — the pip reads went well, Anakin found his spots, and the prep before Sabine's bomb turned what should have been a rough round into a non-event.</p>
+
+  <!-- MATCH OVERVIEW -->
+  <h2 id="overview">Match Overview</h2>
+
+  <div class="match-info">
+    <div class="match-faction">
+      <div class="match-faction-label">My List</div>
+      <div class="match-faction-name">Galactic Republic</div>
+      <div class="match-faction-commander">Anakin Skywalker — 501st Legion</div>
+    </div>
+    <div class="match-vs">VS</div>
+    <div class="match-faction">
+      <div class="match-faction-label">Opponent</div>
+      <div class="match-faction-name">Rebel Alliance</div>
+      <div class="match-faction-commander">Leia Organa — Swiftwing (Owen / Fifth Trooper)</div>
+    </div>
+    <div class="match-result">
+      <div class="match-result-item"><div class="match-result-label">Result</div><div class="match-result-val result-win">WIN</div></div>
+      <div class="match-result-item"><div class="match-result-label">My Score</div><div class="match-result-val result-win">7</div></div>
+      <div class="match-result-item"><div class="match-result-label">Opp Score</div><div class="match-result-val result-loss">3</div></div>
+      <div class="match-result-item"><div class="match-result-label">Primary</div><div class="match-result-val" style="color:var(--gold);font-size:0.75rem;">Contact, Contact!</div></div>
+      <div class="match-result-item"><div class="match-result-label">Secondary</div><div class="match-result-val" style="color:var(--gold);font-size:0.75rem;">Failed Negotiations</div></div>
+      <div class="match-result-item"><div class="match-result-label">Rounds</div><div class="match-result-val" style="color:var(--text-dim);font-size:1rem;">3 / 5</div></div>
+    </div>
+  </div>
+
+  <p>Owen is the latest host of The Fifth Trooper and someone who plays against Dashz regularly, so I knew going in this wasn't going to be a soft match. The thing I was most worried about was Han on the Tauntaun — his 1-pip gives him Unstoppable, meaning he can double activate with Pierce on the melee profile. My four Strike Teams are fragile, and Han could chew through my activation advantage fast if I let him get a free run at them. That was the problem I needed to solve before the game even started.</p>
+
+  <!-- SCENARIO -->
+  <h2 id="scenario">The Scenario</h2>
+
+  <p><strong>Contact, Contact!</strong> places 5 listening post POIs across the board and gives every unit Precise 1 while contesting one. Scoring starts from round 2 — 1VP per listening post secured in allied or contested territory, 2VP for any secured in enemy territory. It rewards aggressive forward positioning and punishes lists that can't contest the middle efficiently.</p>
+
+  <p><strong>Failed Negotiations</strong> adds an Exchange POI in the centre. Each commander and special forces unit gains a Claim action to pick up a prisoner asset, and you score 1VP per round for each unit holding a prisoner within range 1 of the Exchange. Units holding prisoners also gain Incognito at the start of the activation phase until the end of the round.</p>
+
+  <div class="callout" data-label="SCENARIO NOTE">
+    <p>The combo works well because the centre POI pulls double duty — it's both a listening post and the Failed Negotiations Exchange. Holding it is worth a lot of VPs, but it also puts your units right in the middle of the fight. For Anakin, that's kind of the whole point.</p>
+  </div>
+
+  <!-- THE LISTS -->
+  <div class="faction-flavor">
+    <div class="faction-flavor-label">// 501st Legion · Imperial Battle Group</div>
+    <p class="faction-flavor-text">The 501st has always been Anakin's legion. That didn't change when he swore loyalty to the Emperor. If anything, they fight harder now — because their commander has nothing left to hold him back.</p>
+  </div>
+
+  <h2 id="lists">The Lists</h2>
+
+  <p>The list is built around Anakin and the ARCs as the primary threat and objective pieces. The four Strike Teams and Delta Squad handle the long-range game — surge to crit on the Strike Teams and Impact on Delta gives the list anti-armor reach and enough ranged pressure that opponents usually have to push up into ARC threat range rather than sit back.</p>
+
+  <div class="army-summary">
+    <div class="army-summary-header">
+      <div class="army-summary-name">Galactic Republic — 501st Legion · Anakin Skywalker</div>
+      <div class="army-summary-pts">1000 / 1000 pts · 12 Activations</div>
+    </div>
+    <div class="army-entry"><div><div class="army-entry-name">Anakin Skywalker</div><div class="army-entry-sub">Burst of Speed · Clairvoyance · Into the Fray · Tenacity</div></div><div class="army-entry-pts">200 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">Clone Trooper Infantry</div><div class="army-entry-sub">Corps</div></div><div class="army-entry-pts">56 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">ARC Troopers</div><div class="army-entry-sub">Clone Medic · Into the Fray</div></div><div class="army-entry-pts">94 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">ARC Troopers</div><div class="army-entry-sub">Into the Fray</div></div><div class="army-entry-pts">74 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">ARC Troopers</div><div class="army-entry-sub">Clone Commander</div></div><div class="army-entry-pts">100 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">ARC Strike Teams ×4</div><div class="army-entry-sub">DC-15x ARC Trooper Sniper</div></div><div class="army-entry-pts">196 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">Clone Commandos — Delta Squad</div><div class="army-entry-sub">Katarn Pattern Armor · DC-17m ICWS Config</div></div><div class="army-entry-pts">105 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">AT-RT</div><div class="army-entry-sub">Flamethrower</div></div><div class="army-entry-pts">75 pts</div></div>
+    <div class="army-total"><span>TOTAL</span><span>1000 pts</span></div>
+  </div>
+
+  <div class="faction-flavor rebel">
+    <div class="faction-flavor-label">// Alliance to Restore the Republic · Rebel Cell Designation: Swiftwing</div>
+    <p class="faction-flavor-text">They don't have the numbers. What they have is desperation, a handful of heroes, and the belief that being outgunned has never stopped them before. They're not wrong. But today they're facing the Empire's finest, the 501st.</p>
+  </div>
+
+  <p>Owen was running Leia as commander with Han and Sabine as operatives — all the newer Rebel releases in one list. Each of his three Rebel Trooper squads had a hero embedded: Luke, Cassian, and Jyn. Those super squads carry a lot of bodies and a dangerous hero profile each, which makes them hard to trade into efficiently. Two Commando Strike Teams with DH-447 Snipers gave him long-range counter-snipe, two Commando squads with Proton Charges covered objectives, the Sleeper Cell's insane range two dice pool and the T-47 Airspeeder's flexibility rounded it out. We both had 12 activations, so there was no pass pool advantage on either side — pip reads and order control were everything.</p>
+
+  <div class="army-summary">
+    <div class="army-summary-header">
+      <div class="army-summary-name">Rebel Alliance — Leia Organa · Swiftwing (Owen)</div>
+      <div class="army-summary-pts">999 / 1000 pts · 12 Activations</div>
+    </div>
+    <div class="army-entry"><div><div class="army-entry-name">Leia Organa</div><div class="army-entry-sub">Commander · Vigilance · Portable Scanner</div></div><div class="army-entry-pts">90 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">Sabine Wren</div><div class="army-entry-sub">Operative · Up Close and Personal · Combat Shield · Electro Grappling Line · The Darksaber</div></div><div class="army-entry-pts">128 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">Han Solo (Reluctant Hero)</div><div class="army-entry-sub">Operative · Tenacity</div></div><div class="army-entry-pts">Operative</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">Rebel Troopers</div><div class="army-entry-sub">Luke Skywalker · SX-21 Trooper</div></div><div class="army-entry-pts">78 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">Rebel Troopers</div><div class="army-entry-sub">Cassian Andor · Rebel Trooper Squad · SX-21 Trooper</div></div><div class="army-entry-pts">118 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">Rebel Troopers</div><div class="army-entry-sub">Jyn Erso · SX-21 Trooper</div></div><div class="army-entry-pts">75 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">Rebel Sleeper Cell</div><div class="army-entry-sub">Astromech</div></div><div class="army-entry-pts">87 pts</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">Rebel Commandos ×2</div><div class="army-entry-sub">Proton Charge Saboteur</div></div><div class="army-entry-pts">56 pts ea.</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">Rebel Commandos Strike Team ×2</div><div class="army-entry-sub">DH-447 Sniper</div></div><div class="army-entry-pts">40 pts ea.</div></div>
+    <div class="army-entry"><div><div class="army-entry-name">T-47 Airspeeder</div><div class="army-entry-sub">Outer Rim Speeder Jockey · Mo/Dk Power Harpoon</div></div><div class="army-entry-pts">135 pts</div></div>
+    <div class="army-total"><span>TOTAL</span><span>999 pts</span></div>
+  </div>
+
+  <!-- PRE-GAME -->
+  <h2 id="pregame">Pre-Game</h2>
+
+  <h3>Blue Player & Mission Building</h3>
+  <p>I was deliberately trying missions I hadn't played before, so the ban phase wasn't heavily optimized. The one purposeful ban was Advance Intel — Han going double-last on turn 1 is a nightmare scenario, and I wasn't handing him that for free.</p>
+  <p>I took the lower side of the table, which put my Strike Teams in a solid position to get an upgraded shot off on turn 1 and duck back into cover immediately, directly behind the forest area terrain in the bottom center of the map. It also gave me Prepared Position flexibility to put Anakin on either the middle or right POI, depending on how Owen deployed.</p>
+
+  <h3>Table & Terrain</h3>
+  <p>The table was well-packed — a large multi-story building on the left providing hard LOS blocking, ruins and standing stones down the centre, a tall rocky outcrop mid-left, trees across the middle, and a curved structure on the right flank. Plenty of approach routes for Anakin to close the distance without eating a full volley, and good spots to hide corps units on objectives.</p>
+
+  <div style="margin:1.5rem 0;">
+    <img src="../assets/images/table-anakin-vs-swiftwing.jpg" alt="Table setup before the game — Contact, Contact! with Failed Negotiations" style="width:100%;max-height:420px;object-fit:cover;object-position:center 30%;border:1px solid rgba(201,168,76,0.2);display:block;">
+    <p style="font-family:'Share Tech Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;color:rgba(255,255,255,0.2);text-align:right;margin-top:0.35rem;">PRE-GAME TABLE SETUP · CONTACT, CONTACT!</p>
+  </div>
+
+  <div class="callout callout-tip" data-label="PHOTOGRAPHER'S NOTE">
+    <p>I get way too locked in once dice start rolling to remember to take pictures — this pre-game shot is all I've got. <strong>I'll do better, I promise.</strong> Future battle reports will have proper in-game photos. Probably.</p>
+  </div>
+
+  <h3>Opening Command Hand & Game Plan</h3>
+  <p>I expected Owen to open with Han's 1-pip, so I went with Anakin's 3-pip to get order control on my key units and generate early tokens. Since Owen only had two sniper Strike Teams, the plan was to wait them out and then set up standbys around my own Strike Teams once both of his had activated. Make the Han charge look like a bad idea before he ever commits to it.</p>
+
+  <div class="callout" data-label="GAME PLAN">
+    <p>Han double activating with Pierce into my Strike Teams was the nightmare scenario. Four Strike Teams is a big activation advantage, but Han can erase that quickly if I give him a clean run. The plan was to keep standbys up around my Strike Teams and make the charge look too costly. <strong>Banning Advance Intel removed the scariest version of that — Han going double-last on turn 1 before I could set up any deterrent.</strong></p>
+  </div>
+
+  <!-- ROUNDS -->
+  <h2 id="turns">Round by Round</h2>
+
+  <!-- R1 -->
+  <div class="faction-flavor">
+    <div class="faction-flavor-label">// Field Report · Round 1 · 501st Forward Command</div>
+    <p class="faction-flavor-text">The General doesn't wait for permission. The 501st deploys tight, snipers find their angles, and Anakin uses Burst of Speed to close on Cassian's position before the Rebels can react. The listening posts were never really in question.</p>
+  </div>
+
+  <div class="turn-block">
+    <div class="turn-header">
+      <div class="turn-num">R1</div>
+      <div class="turn-title">Advance and Establish Position</div>
+    </div>
+    <div class="turn-body">
+      <h3>Command Phase</h3>
+      <div class="score-track">
+        <div class="score-chip"><div class="score-chip-label">My Card</div><div class="score-chip-val">Anakin 3-pip</div></div>
+        <div class="score-chip"><div class="score-chip-label">Pips</div><div class="score-chip-val">•••</div></div>
+        <div class="score-chip"><div class="score-chip-label">Opp Card</div><div class="score-chip-val">Han 1-pip</div></div>
+        <div class="score-chip"><div class="score-chip-label">Pips</div><div class="score-chip-val">•</div></div>
+        <div class="score-chip"><div class="score-chip-label">Priority</div><div class="score-chip-val opp-score">OWEN</div></div>
+      </div>
+      <p><strong>Orders issued:</strong> Anakin's 3-pip let me order Anakin, the hostage ARC unit, and the corps unit for an early pass and to get some tokens out on the field. Owen gave Han an order, guaranteeing him the ability to go last with Han as the final activation. That last activation threat shaped my entire round 1 approach.</p>
+
+      <h3>Activation Phase</h3>
+      <p>Round 1 was positioning and deterrence. I deployed conservatively around my home POI, where a LOS blocker covered most of my lines. The middle POI was also completely covered by a LOS blocker, which denied a lot of meaningful shots from my snipers while also allowing Owen to set up aggressively against my list. The Strike Teams got a few shots into Leia, but she blocked almost everything — just 1 wound. Owen could see the range game wasn't going his way and pushed aggressively up the middle behind the central POI.</p>
+      <p>Two plays shaped the rest of the game. When Owen's Strike Teams shot my AT-RT, I used that opening to Infiltrate Delta and get a clean range 4 shot that wiped his Strike Team squad entirely. Then — and this is where Burst of Speed earned its points — I used Burst of Speed to push Anakin into Cassian's super squad in a single activation, further than a standard move would allow. Cassian had three dodges, so the damage was minimal, but Anakin was now engaged and wrapped up tight enough that Han couldn't counter-charge to get early wounds on Anakin.</p>
+
+      <div class="activation">
+        <div class="activation-unit">Strike Teams</div>
+        <div class="activation-detail">Long-range shots into Leia — she blocked almost everything. <strong>1 wound on Leia.</strong></div>
+        <div class="activation-result neutral">1 WOUND</div>
+      </div>
+      <div class="activation">
+        <div class="activation-unit">Delta Squad</div>
+        <div class="activation-detail">Infiltrated after Owen's Strike Teams shot the AT-RT. Clean range 4 shot. <strong>Owen's Strike Team wiped.</strong></div>
+        <div class="activation-result good">SQUAD WIPED</div>
+      </div>
+      <div class="activation">
+        <div class="activation-unit">Anakin</div>
+        <div class="activation-detail">Used Burst of Speed to close on Cassian's super squad in one activation. Three dodges kept damage minimal — Anakin now engaged, Han can't counter-charge cleanly. <strong>Set up for R2 execute.</strong></div>
+        <div class="activation-result neutral">ENGAGED</div>
+      </div>
+
+      <h3>End Phase</h3>
+      <div class="score-track">
+        <div class="score-chip"><div class="score-chip-label">My VPs</div><div class="score-chip-val my-score">0</div></div>
+        <div class="score-chip"><div class="score-chip-label">Opp VPs</div><div class="score-chip-val opp-score">0</div></div>
+        <div class="score-chip"><div class="score-chip-label">My Losses</div><div class="score-chip-val">0</div></div>
+        <div class="score-chip"><div class="score-chip-label">Owen Losses</div><div class="score-chip-val">Strike Team</div></div>
+      </div>
+      <p>No VPs scored this round — Contact, Contact! doesn't score until round 2. Going into R2: Anakin was dug into Cassian's unit and safe from Han. Delta had already removed Owen's Strike Team threat. The board was set for Anakin to execute.</p>
+    </div>
+  </div>
+
+  <!-- R2 -->
+  <div class="faction-flavor">
+    <div class="faction-flavor-label">// Field Report · Round 2 · 501st Forward Command</div>
+    <p class="faction-flavor-text">This is where Anakin stops being a general and becomes a weapon. Han Solo thought he had a window. He didn't. Six hits. Full health. The Rebel commander is gone before his troops realize what happened.</p>
+  </div>
+
+  <div class="turn-block">
+    <div class="turn-header">
+      <div class="turn-num">R2</div>
+      <div class="turn-title">Anakin Executes — Cassian Down, Han Dead via Tempted</div>
+    </div>
+    <div class="turn-body">
+      <h3>Command Phase</h3>
+      <div class="score-track">
+        <div class="score-chip"><div class="score-chip-label">My Card</div><div class="score-chip-val">Anakin 1-pip</div></div>
+        <div class="score-chip"><div class="score-chip-label">Pips</div><div class="score-chip-val">•</div></div>
+        <div class="score-chip"><div class="score-chip-label">Opp Card</div><div class="score-chip-val">Dodge 3-pip</div></div>
+        <div class="score-chip"><div class="score-chip-label">Pips</div><div class="score-chip-val">•••</div></div>
+        <div class="score-chip"><div class="score-chip-label">Priority</div><div class="score-chip-val my-score">ME</div></div>
+      </div>
+      <p><strong>Orders issued:</strong> Priority with the 1-pip meant Anakin went first. Owen ordered his three hero squads. This was the critical activation — Cassian's unit had 9 models, meaning I needed 5 hits, then 4 hits across the double attack to wipe it. That's a lot to ask. Clairvoyance was the safety net that made it a real plan rather than a dice roll.</p>
+
+      <h3>Activation Phase</h3>
+      <p>Anakin went first and hit 5 then 4 to wipe Cassian's squad — Clairvoyance helped ensure that if I flubbed the roll, I had a strong chance to recover. He then moved into Jyn's unit to stay out of Han's reach. The hostage ARC came up and hit what was left of the Jyn squad, and the medic ARC grabbed the middle POI, finished the squad off, dropped the hostage claim, and healed a wound on Anakin in the same activation.</p>
+      <p>The Tempted bait was deliberate. After the Strike Teams dropped suppression on Owen's Commandos, I left one exposed, hoping Owen would shoot it rather than something more important. He took the shot, I blanked the save, and Anakin triggered Tempted into Han — 6 out of 6. Han died in round 2. That was the turning point.</p>
+      <p>I had a choice with Delta this turn — clean Impact shot into the Airspeeder that was sitting on my home POI, or shoot into the Sleeper Cell to strip models before they charged Anakin. I went with the Sleeper Cell. The Airspeeder wasn't going anywhere, and I'd rather have Anakin take less damage when the Cell came in. The ARCs chipped the Airspeeder down in the meantime.</p>
+
+      <div class="activation">
+        <div class="activation-unit">Anakin</div>
+        <div class="activation-detail">Hit 5 then 4 — Clairvoyance making the tough roll manageable. Moved into Jyn's unit after. <strong>Cassian's squad wiped.</strong></div>
+        <div class="activation-result good">CASSIAN WIPED</div>
+      </div>
+      <div class="activation">
+        <div class="activation-unit">Strike Teams</div>
+        <div class="activation-detail">Dropped 4 suppression on Owen's Commandos, denying his back POI. Deliberately left one exposed to bait a Tempted trigger. <strong>Back POI denied.</strong></div>
+        <div class="activation-result good">4 SUPPRESSION</div>
+      </div>
+      <div class="activation">
+        <div class="activation-unit">Anakin — Tempted</div>
+        <div class="activation-detail">Owen shot the exposed Strike Team. I blanked the save. Anakin triggered Tempted — 6 out of 6 into Han on the Tauntaun. <strong>Han eliminated at full health.</strong></div>
+        <div class="activation-result good">HAN DEAD</div>
+      </div>
+      <div class="activation">
+        <div class="activation-unit">ARC Troopers (Medic)</div>
+        <div class="activation-detail">Grabbed the middle POI, finished Jyn's squad, dropped the hostage claim, healed a wound off Anakin. <strong>Middle POI taken, Anakin healed.</strong></div>
+        <div class="activation-result good">POI + HEAL</div>
+      </div>
+      <div class="activation">
+        <div class="activation-unit">Delta Squad</div>
+        <div class="activation-detail">Chose Sleeper Cell over the Airspeeder — stripping models to reduce incoming damage on Anakin. <strong>Sleeper Cell weakened.</strong></div>
+        <div class="activation-result neutral">CHIP DMG</div>
+      </div>
+      <div class="activation">
+        <div class="activation-unit">ARC Troopers</div>
+        <div class="activation-detail">Chipped Owen's Airspeeder down across multiple activations, setting up a clean removal in round 3. <strong>Airspeeder low health.</strong></div>
+        <div class="activation-result neutral">CHIP DMG</div>
+      </div>
+
+      <h3>End Phase</h3>
+      <div class="score-track">
+        <div class="score-chip"><div class="score-chip-label">My VPs</div><div class="score-chip-val my-score">3</div></div>
+        <div class="score-chip"><div class="score-chip-label">Opp VPs</div><div class="score-chip-val opp-score">1</div></div>
+        <div class="score-chip"><div class="score-chip-label">My Losses</div><div class="score-chip-val">Strike Team</div></div>
+        <div class="score-chip"><div class="score-chip-label">Owen Losses</div><div class="score-chip-val">Han, Cassian, Jyn</div></div>
+      </div>
+      <p>Han dead, Cassian gone, Jyn's squad wiped. Anakin was sitting at 3 wounds, but the Airspeeder was on low health, and I had the tools to deal with Sabine's bomb. Round 3 was going to be about surviving it cleanly.</p>
+    </div>
+  </div>
+
+  <!-- R3 -->
+  <div class="faction-flavor rebel">
+    <div class="faction-flavor-label">// Alliance Intercept · Round 3 · Sabine Wren — Last Resort</div>
+    <p class="faction-flavor-text">With Han dead and the line collapsing, Sabine Wren does what she always does — she builds a bomb and hopes the blast is big enough to change the outcome. The bomb went off. The clones held. Sometimes the Rebellion's best isn't enough — and today was one of those days.</p>
+  </div>
+
+  <div class="turn-block">
+    <div class="turn-header">
+      <div class="turn-num">R3</div>
+      <div class="turn-title">Sabine Bomb Absorbed — Owen Calls It</div>
+    </div>
+    <div class="turn-body">
+      <h3>Command Phase</h3>
+      <div class="score-track">
+        <div class="score-chip"><div class="score-chip-label">My Card</div><div class="score-chip-val">501st 1-pip</div></div>
+        <div class="score-chip"><div class="score-chip-label">Pips</div><div class="score-chip-val">•</div></div>
+        <div class="score-chip"><div class="score-chip-label">Opp Card</div><div class="score-chip-val">Sabine Bomb</div></div>
+        <div class="score-chip"><div class="score-chip-label">Pips</div><div class="score-chip-val">•</div></div>
+        <div class="score-chip"><div class="score-chip-label">Priority</div><div class="score-chip-val my-score">ME</div></div>
+      </div>
+      <p><strong>Orders issued:</strong> The 501st 1-pip went on Anakin and the ARCs — the priority was getting dodge tokens distributed before Sabine activated. Owen ordered Sabine. The dodge pre-load was the decision that defined how much the bomb actually cost me.</p>
+
+      <h3>Activation Phase</h3>
+      <p>Sabine hit 3 ARC units, the AT-RT, and Anakin — a large set of units. But the dodge tokens absorbed most of it, the ARC commanders along with the Into the Fray upgrade kept the surges flowing, and Inspire cleared the suppression so my ARCs could still get both actions. Two models lost and one wound on Anakin. For a bomb that size, that's a very good result.</p>
+      <p>From there, the round closed out cleanly. Delta put the Airspeeder to 1 health, and the Strike Team finished it with the guaranteed wound. With Han, Cassian, Jyn's squad, his Strike Team, and the Airspeeder all gone — and Anakin still upright — Owen called it.</p>
+      <p>Owen conceded. Well-played game — just a few different deployment decisions could have made it very interesting.</p>
+
+      <div class="activation">
+        <div class="activation-unit">Sabine — Bomb</div>
+        <div class="activation-detail">Hit 3 ARCs, AT-RT, and Anakin. Dodge tokens, surge gen, and Inspire absorbed almost all of it. <strong>2 models lost, 1 wound on Anakin.</strong></div>
+        <div class="activation-result neutral">BOMB TANKED</div>
+      </div>
+      <div class="activation">
+        <div class="activation-unit">Delta Squad</div>
+        <div class="activation-detail">Impact shot brought Owen's Airspeeder to 1 health. <strong>One wound from death.</strong></div>
+        <div class="activation-result good">SPEEDER CRIT</div>
+      </div>
+      <div class="activation">
+        <div class="activation-unit">ARC Strike Team</div>
+        <div class="activation-detail">Guaranteed wound effect used to permanently finish Owen's Airspeeder. <strong>Airspeeder eliminated.</strong></div>
+        <div class="activation-result good">SPEEDER DEAD</div>
+      </div>
+
+      <h3>Final Score</h3>
+      <div class="score-track">
+        <div class="score-chip"><div class="score-chip-label">Final VPs</div><div class="score-chip-val my-score">7</div></div>
+        <div class="score-chip"><div class="score-chip-label">Opp VPs</div><div class="score-chip-val opp-score">3</div></div>
+        <div class="score-chip"><div class="score-chip-label">Result</div><div class="score-chip-val my-score">WIN</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY MOMENTS -->
+  <div class="faction-flavor">
+    <div class="faction-flavor-label">// After-Action Report · 501st Legion · Lord Vader Commanding</div>
+    <p class="faction-flavor-text">The Rebel cell is broken. The listening posts are secured. Lord Vader's report is filed: all I'm surrounded by is fear and dead men.</p>
+  </div>
+
+  <h2 id="moments">Key Moments</h2>
+
+  <div class="key-point">
+    <div class="key-num">01</div>
+    <div class="key-text"><strong>Baiting the Tempted correctly.</strong> I deliberately left a Strike Team exposed after dropping suppression on Owen's Commandos. He shot it, I blanked the save, and Anakin rolled 6 out of 6 into Han on the Tauntaun. Needed all six and got them — without Djem So that was a tighter roll than it should have been. Han's death in round 2 removed Owen's biggest threat and his command card engine at the same time.</div>
+  </div>
+  <div class="key-point">
+    <div class="key-num">02</div>
+    <div class="key-text"><strong>Pre-loading dodges before Sabine's bomb.</strong> The 501st 1-pip handed out dodge tokens to the ARCs before Sabine activated. Combined with surge generation from the ARC commanders and Into the Fray, a bomb that should have swung the game ended up costing me two models and one wound on Anakin. Knowing the threat is coming and preparing for it specifically is what made round 3 manageable.</div>
+  </div>
+  <div class="key-point">
+    <div class="key-num">03</div>
+    <div class="key-text"><strong>Choosing Delta's target in round 2.</strong> I had a clean Impact shot into the Airspeeder threatening my home POI, but the Sleeper Cell was going to charge Anakin regardless, and I wanted it smaller when it did. Shooting the Cell with Delta and letting the ARCs chip the Airspeeder down over time kept Anakin healthier, and the Airspeeder still died cleanly in round 3. Right call.</div>
+  </div>
+
+  <!-- MISTAKES -->
+  <h2 id="lessons">Mistakes</h2>
+
+  <div class="callout callout-warning" data-label="MISTAKE">
+    <p>Forgot to trigger <strong>Djem So</strong> when Han hit Anakin twice with both rolls having blanks. That's 2 free wounds I left on Han — meaning I needed a perfect 6 out of 6 on the Tempted swing instead of something more forgiving. Got lucky it didn't matter. Djem So needs to be automatic every time Anakin takes a hit at range 1 or in melee.</p>
+  </div>
+
+  <!-- VERDICT -->
+  <div class="art-divider">
+    <div class="art-divider-line"></div>
+    <div class="art-divider-icon">◆ ◆ ◆</div>
+    <div class="art-divider-line"></div>
+  </div>
+
+  <div class="verdict">
+    <div class="verdict-label">// Post-Game Thoughts</div>
+    <p>A good win against a strong player with a list he knows very well. The pip reads held up, Burst of Speed got Anakin where he needed to be on turn 1, the Tempted bait worked exactly as planned, and the dodge prep before Sabine's bomb turned a scary round 3 into a controlled one. Owen's list had the tools to make it very uncomfortable — a different round 2, and it could have gone another way. <strong>The Djem So miss is the one thing I'm still thinking about. That reflex has to be automatic.</strong></p>
+  </div>
+
+</article>
+
+<!-- SIDEBAR -->
+<aside class="article-sidebar">
+  <div class="sidebar-widget">
+    <div class="widget-label">Contents</div>
+    <ul class="toc-list">
+      <li class="toc-item"><a href="#overview">Match Overview</a></li>
+      <li class="toc-item"><a href="#scenario">The Scenario</a></li>
+      <li class="toc-item"><a href="#lists">The Lists</a></li>
+      <li class="toc-item"><a href="#pregame">Pre-Game</a></li>
+      <li class="toc-item"><a href="#turns">Round by Round</a></li>
+      <li class="toc-item"><a href="#moments">Key Moments</a></li>
+      <li class="toc-item"><a href="#lessons">Mistakes</a></li>
+    </ul>
+  </div>
+  <div class="sidebar-widget">
+    <div class="widget-label">Match Summary</div>
+    <div class="list-entry"><span class="list-entry-name">Result</span><span class="list-entry-pts" style="color:var(--green)">WIN</span></div>
+    <div class="list-entry"><span class="list-entry-name">My Faction</span><span class="list-entry-pts">Galactic Republic</span></div>
+    <div class="list-entry"><span class="list-entry-name">Commander</span><span class="list-entry-pts">Anakin Skywalker</span></div>
+    <div class="list-entry"><span class="list-entry-name">Opponent</span><span class="list-entry-pts">Swiftwing (Owen)</span></div>
+    <div class="list-entry"><span class="list-entry-name">Opp Commander</span><span class="list-entry-pts">Leia Organa</span></div>
+    <div class="list-entry"><span class="list-entry-name">Primary</span><span class="list-entry-pts">Contact, Contact!</span></div>
+    <div class="list-entry"><span class="list-entry-name">Secondary</span><span class="list-entry-pts">Failed Negotiations</span></div>
+    <div class="list-entry"><span class="list-entry-name">Score</span><span class="list-entry-pts">7 – 3</span></div>
+    <div class="list-entry"><span class="list-entry-name">Rounds</span><span class="list-entry-pts">3 / 5</span></div>
+  </div>
+  <div class="sidebar-widget">
+    <div class="widget-label">Share</div>
+    <div class="share-row">
+      <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='Copied!'">Copy Link</button>
+      <button class="share-btn" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href))">Twitter</button>
+      <button class="share-btn" onclick="window.open('https://reddit.com/submit?url='+encodeURIComponent(window.location.href))">Reddit</button>
+    </div>
+  </div>
+  <div class="sidebar-widget">
+    <div class="widget-label">Related</div>
+    <a href="../army-lists/stormtroopers-guide.html" style="text-decoration:none;">
+      <div class="related-post">
+        <div class="related-cat">// Unit Guide · Empire</div>
+        <div class="related-title">Stormtroopers — Full Unit Breakdown</div>
+      </div>
+    </a>
+    <a href="../army-lists/501st-article.html" style="text-decoration:none;">
+      <div class="related-post">
+        <div class="related-cat">// Army List · GAR</div>
+        <div class="related-title">501st Isn't Bad — People Just Build It Wrong</div>
+      </div>
+    </a>
+  </div>
+</aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ZERO HOUR</div>
+    <ul class="footer-links">
+      <li><a href="../battle-reports/battle-reports.html">Battle Reports</a></li>
+      <li><a href="../army-lists/army-lists.html">Army Lists</a></li>
+      <li><a href="../units/units.html">Units</a></li>
+      <li><a href="../painting/painting.html">Painting</a></li>
+      <li><a href="../meta/meta.html">Meta</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 · NOT AFFILIATED WITH FANTASY FLIGHT GAMES OR ATOMIC MASS GAMES</p>
+  </div>
+</footer>
+
+<script>
+  const sf = document.getElementById('starfield');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div'); s.className = 'star';
+    const sz = Math.random() * 2 + 0.4;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*5+2).toFixed(1)}s;--delay:-${(Math.random()*8).toFixed(1)}s;--min:${(Math.random()*0.1).toFixed(2)};--max:${(Math.random()*0.5+0.2).toFixed(2)};`;
+    sf.appendChild(s);
+  }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.callout,.turn-block,.match-info,.army-summary,.verdict,.faction-flavor').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    obs.observe(el);
+  });
+  const sections = document.querySelectorAll('[id]');
+  const tocLinks = document.querySelectorAll('.toc-item a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    tocLinks.forEach(a => { a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--gold)' : ''; });
+  });
+</script>
+</body>
+</html>
