@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rule of Two — A Framework for Building Lists You Actually Know How to Play | Zero Hour Legion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="article.css">
+<style>
+  /* Page-specific styles for The Rule of Two article — extends article.css */
+  .role-card { background: var(--dark3); border: 1px solid rgba(201,168,76,0.15); padding: 1.5rem; margin: 1.5rem 0; }
+  .role-card-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem; padding-bottom: 0.9rem; border-bottom: 1px solid rgba(201,168,76,0.12); }
+  .role-card-unit { font-family: 'Orbitron', monospace; font-size: 0.95rem; font-weight: 700; color: var(--white); }
+  .role-card-roles { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; white-space: nowrap; }
+  .role-card p { font-size: 0.92rem; line-height: 1.75; color: var(--text-dim); margin-bottom: 0; }
+  .role-pill-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 1.5rem 0 2rem; }
+  .role-pill { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; padding: 0.3rem 0.75rem; border: 1px solid rgba(201,168,76,0.25); color: var(--text-dim); text-transform: uppercase; }
+  .case-study-label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.3em; color: var(--blue-glow); text-transform: uppercase; margin: 3rem 0 0.5rem; }
+  .list-card { margin-bottom: 2.5rem; }
+  .list-entry-name { font-size: 0.8rem; }
+  .list-entry-name.upgrade { color: var(--text-dim); font-size: 0.75rem; }
+</style>
+</head>
+<body>
+
+<div id="starfield"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">ZERO HOUR LEGION</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="guides.html">Guides</a></li>
+      <li><a href="battle-reports.html">Battle Reports</a></li>
+      <li><a href="lists.html">Lists</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="article-hero">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="guides.html">Guides</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>List Building</span>
+  </div>
+
+  <div class="article-category">List Building Framework</div>
+
+  <h1 class="article-title">The Rule of Two: A Framework for Building Lists You Actually Know How to Play</h1>
+
+  <div class="article-meta-row">
+    <div class="meta-chip"><span class="meta-chip-icon">◆</span> Zero Hour Legion</div>
+    <div class="meta-divider"></div>
+    <div class="meta-chip"><span class="meta-chip-icon">◆</span> 11 min read</div>
+    <div class="meta-divider"></div>
+    <div class="meta-chip"><span class="meta-chip-icon">◆</span> All Factions</div>
+  </div>
+
+  <div class="article-tags">
+    <span class="atag">List Building</span>
+    <span class="atag">Strategy</span>
+    <span class="atag">Republic</span>
+    <span class="atag">Rebel</span>
+    <span class="atag">Theory</span>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO IMAGE — drop your image in here
+     Replace src="IMAGE_HERE.jpg" with your file path/filename,
+     and update the alt text + credit to match.
+============================================================ -->
+<div class="article-hero-image">
+  <img src="IMAGE_HERE.jpg" alt="Describe the image here">
+  <div class="image-credit">PHOTO CREDIT / SOURCE</div>
+</div>
+
+
+<div class="article-layout">
+
+  <main class="article-body">
+
+    <p class="article-lead">Most players build a list around efficiency and synergy, then figure out how to actually play it once they're standing at the table. I do it backwards. Before I ever think about how a list plays, I assign every unit two roles — no more, no less.</p>
+
+    <p>Call it the Rule of Two for list building. It sounds simple, but it's saved me more games than any single unit choice ever has, because it means I never have to burn mental energy mid-game deciding what a unit is "for." I already know.</p>
+
+    <h2 id="five-roles">The Five Roles</h2>
+
+    <p>There are five roles I build around: Primary Objective, Secondary Objective, Kill, Support, and Board Control. Every unit in my list gets exactly two. Those two roles can flex depending on what I'm facing that round, but the unit always has a job, and I always know what it is.</p>
+
+    <p>Here's the breakdown.</p>
+
+    <div class="key-point">
+      <div class="key-num">01</div>
+      <div class="key-text"><strong>Primary Objective.</strong> These are the units you lean on to fight for control of the primary POIs. Close-range, durable units tend to be the best fit here, but that's not a hard rule — fodder can work too, as long as you control the timing well enough to get value out of them before they get fed into the grinder. Good examples: ARC Troopers, most Heroes, Riot Troopers, BSE, Magnaguards, fleets, Melee Wookiees.</div>
+    </div>
+
+    <div class="key-point">
+      <div class="key-num">02</div>
+      <div class="key-text"><strong>Secondary Objective.</strong> Usually ranged units or fodder pieces whose job is to handle the board away from the main POIs — tapping relays, retrieving data, scoring secondaries sitting in your own territory. They let you free up your expensive primary pieces to focus entirely on pushing and changing the game state. I like naked corps bodies and strike teams for this — really, anything with a reliable range-4 threat profile tends to fit. A few aggressive secondaries (Destroy Enemy Base, Recon Intel, Hostage) are different enough in nature that I treat them more like primaries than secondaries.</div>
+    </div>
+
+    <div class="key-point">
+      <div class="key-num">03</div>
+      <div class="key-text"><strong>Kill.</strong> Kill units exist to remove specific threats, and you generally need two flavors of this. Some units are built to shred infantry but struggle into armor, especially Armor 5, and that's where dedicated impact pieces come in. You don't need to build your whole list around anti-armor, but you want a counter somewhere — I'll often hedge this with a Force user carrying Saber Throw, just to have an answer if I draw light on impact elsewhere. Then there are the all-around lethal units — Sleepers, Republic Commandos, and most Jedi — since they're already carrying Pierce and Impact natively.</div>
+    </div>
+
+    <div class="key-point">
+      <div class="key-num">04</div>
+      <div class="key-text"><strong>Support.</strong> Support units amplify your army's power, consistency, or durability. The obvious examples are dedicated support commanders like Thrawn or Kalani, but support comes in subtler forms too. Obi-Wan's Guardian keyword cuts early attrition so your hard-hitting units (ARCs, for example) can swing freely later. You can also kit out corps and other rank-and-file units for niche support jobs — electrobinoculars on a stormtrooper to feed Aim tokens to a long-range shooter, medic/repair droids, or a B1 running an HQ uplink for order control.</div>
+    </div>
+
+    <div class="key-point">
+      <div class="key-num">05</div>
+      <div class="key-text"><strong>Board Control.</strong> This is the role that matters most when you need to adapt on the fly. Board control units carry enough lethality or objective threat that your opponent has to plan around them constantly — usually felt hardest in round 1, but never fully going away. Sometimes the right call with a board control piece is to hold it back specifically because of the threat it could create across multiple parts of the table. I find the potential threat of a unit is always more impactful than the actual threat.</div>
+    </div>
+
+    <p>Anakin is the cleanest example. Speed 3 with 3 moves gives him reach to almost anywhere on the board in a single turn, his ability to punish trades, and serious round-by-round lethality between Tempted, his 1-pip, and his 2-pip. Any Force Push user fits this role too, since their mere activation changes the math on objective control. Outside of Force users, anything with controllable timing and a real threat radius counts — Strike Teams, Commandos, Range Troopers, and Super Squads are all classic board control pieces. Suppression and immobilize effects can create the same pressure without a single point of damage.</p>
+
+    <div class="art-divider">
+      <div class="art-divider-line"></div>
+      <div class="art-divider-icon">◆ ◆ ◆</div>
+      <div class="art-divider-line"></div>
+    </div>
+
+    <h2 id="the-rule">The Rule of Two</h2>
+
+    <p>Every unit gets exactly two roles. No more, no less. This isn't about limiting what a unit can do — most units genuinely can do more than two things. It's about removing decision fatigue at the table. When I activate a unit, I already know its job.</p>
+
+    <div class="callout" data-label="Key Mechanic">
+      <p>The same unit can also carry different role assignments across different lists, depending entirely on how it's equipped. A stormtrooper squad is the textbook example of this flexibility: load it up with a T-21, Specialist, and Scopes, and it becomes a <strong>Kill / Primary</strong> unit that holds ground and trades efficiently. Swap in a medic and electrobinoculars instead, and it becomes a <strong>Secondary / Support</strong> piece feeding tokens and holding the back line. Same base unit, completely different job, because of the loadout.</p>
+    </div>
+
+    <h2 id="case-study-republic">Case Study: Breaking Down My Current List</h2>
+
+    <p>Here's how I currently assign roles across my Republic list (501st Legion):</p>
+
+    <div class="list-card">
+      <div class="list-card-title">501ST LEGION — 1000/1000 — 11 ACTIVATIONS</div>
+      <div class="list-entry"><span class="list-entry-name">Ahsoka Tano (Padawan Commander)</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;Force Barrier, Improvised Orders, Seize the Initiative</span></div>
+      <div class="list-entry"><span class="list-entry-name">Anakin Skywalker</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;Burst of Speed, Force Barrier, Into the Fray, Tenacity</span></div>
+      <div class="list-entry"><span class="list-entry-name">Clone Trooper Infantry</span></div>
+      <div class="list-entry"><span class="list-entry-name">ARC Troopers</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;Clone Medic, Into the Fray, Comms Jammer</span></div>
+      <div class="list-entry"><span class="list-entry-name">2x ARC Troopers</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;Clone Medic, Into the Fray</span></div>
+      <div class="list-entry"><span class="list-entry-name">2x Clone Commandos</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;Katarn Pattern Armor, DC-17m ICWS Config</span></div>
+      <div class="list-entry"><span class="list-entry-name">3x ARC Troopers (Strike Team)</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;DC-15x ARC Trooper Sniper</span></div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Anakin</span>
+        <span class="role-card-roles">Board Control / Kill (All)</span>
+      </div>
+      <p>Anakin gets Board Control first because of the sheer threat radius he projects. Swinging into red saves with Tempted triggers averages 5 wounds — his 2-pip pushes that to 7, and his 1-pip can hit 10 (enough to wipe a full Super Squad running red saves). That has to be respected. Once he's in their lines, Tempted lets him trigger that damage a second time per round if the opponent tries to trade into our list, so trading carelessly into Anakin usually backfires. He can stage deep on round 1, thanks to prepared positioning, behind good LOS blockers. With his movement potential, he can threaten almost any point on the table. Ignore that threat and you'll bleed attrition early.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Ahsoka</span>
+        <span class="role-card-roles">Support / Primary Obj</span>
+      </div>
+      <p>Ahsoka earns Support and Primary based on how she's kitted as Padawan Commander, giving the army better order control and reducing early attrition. Eight dice with Pierce sounds lethal on paper, but I don't fully trust her dice pool to carry that role on its own — if you wanted to lean into Ahsoka as a kill piece instead, the right upgrades paired with her higher pip cards could get you there. I keep Primary as her secondary role specifically because she's natively Speed 3 with a red save body, and her low-pip cards let her contest and deny primaries — denying the objective is sometimes just as valuable as scoring it yourself.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Clone Trooper Infantry</span>
+        <span class="role-card-roles">Secondary Obj / Support</span>
+      </div>
+      <p>This squad exists in the list as the structural Corps requirement, so I lean into what it's actually good at: sharing tokens natively, which keeps the whole army consistent round over round. It also makes an excellent secondary piece, since its actions can interact with objectives and support the army at the same time, without costing the list any lethality elsewhere.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">ARC Troopers</span>
+        <span class="role-card-roles">Primary Obj / Kill (Infantry)</span>
+      </div>
+      <p>Both ARC Trooper squads are kitted to be effectively 6 wounds with surges — closer to 18 effective with Impervious. That makes them brutally hard to dislodge from a primary objective. Their natural preference for melee range lines up well with how most POIs require contesting within half range, so setting up those charges is usually straightforward. I rank them second as a kill unit because they average around 7 hits on a melee charge, which attritions most objective-holders fast.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">ARC Troopers (Strike Team)</span>
+        <span class="role-card-roles">Secondary Obj / Board Control</span>
+      </div>
+      <p>This squad sits primarily as a secondary objective piece — lists like this can fall behind on VPs quickly if you're not actively managing scoring in the early rounds. But in rounds 1 and 2 specifically, the sniper's ability to threaten characters at range and drop suppression makes the squad an excellent zoning piece. Most units lose an action per round just from the suppression alone, all while the Strike Team continues managing your objectives elsewhere.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Clone Commandos</span>
+        <span class="role-card-roles">Board Control / Kill (All)</span>
+      </div>
+      <p>Board Control comes first for the Commandos because, while it's tempting to take an early shot round 1, holding them back and infiltrating with their range-4 Pierce profile creates a threat your opponent can never fully ignore. Two aimed Commando shots are usually enough to kill most non-Impervious units, which makes them a major threat even with a relatively small dice pool. I rank Kill second because of how flexible their approach is — their efficient range-4 pool can pick off high-value targets early, then they can swap to Impact configuration to deal with armor, especially against players who get greedy. Tank routes are usually easy to read on most maps ahead of time, so placing Complete the Mission tokens to maximize crits is straightforward. If the opponent avoids the token entirely, that's still a win, because it means you forced them into a worse position, which is their first purpose: Board Control.</p>
+    </div>
+
+    <div class="art-divider">
+      <div class="art-divider-line"></div>
+      <div class="art-divider-icon">◆ ◆ ◆</div>
+      <div class="art-divider-line"></div>
+    </div>
+
+    <h2 id="case-study-rebel">Case Study Two: A Rebel List</h2>
+
+    <p>The system holds up just as well outside of Republic. Here's a Rebel list built around Luke, Han, and Din, broken into the same five roles:</p>
+
+    <div class="list-card">
+      <div class="list-card-title">REBEL ALLIANCE — 999/1000 — 13 ACTIVATIONS</div>
+      <div class="list-entry"><span class="list-entry-name">Luke Skywalker (Commander Skywalker)</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;Underworld Connections, Into the Fray</span></div>
+      <div class="list-entry"><span class="list-entry-name">Han Solo (Reluctant Hero)</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;Trusted Agent, Tenacity, Emergency Stims</span></div>
+      <div class="list-entry"><span class="list-entry-name">Din Djarin</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;Seize the Initiative, Tenacity, Flame Projector, Din's Jetpack, The Darksaber, Grogu</span></div>
+      <div class="list-entry"><span class="list-entry-name">Fleet Troopers</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;Astromech Droid</span></div>
+      <div class="list-entry"><span class="list-entry-name">Rebel Troopers</span></div>
+      <div class="list-entry"><span class="list-entry-name">Fleet Troopers</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;Cassian Andor, Fleet Trooper Squad, Scatter Gun Trooper</span></div>
+      <div class="list-entry"><span class="list-entry-name">Fleet Troopers</span></div>
+      <div class="list-entry"><span class="list-entry-name">2x Rebel Commandos</span></div>
+      <div class="list-entry"><span class="list-entry-name">Rebel Sleeper Cell</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;HQ Uplink, Environmental Gear</span></div>
+      <div class="list-entry"><span class="list-entry-name">2x Rebel Commandos (Strike Team)</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;DH-447 Sniper</span></div>
+      <div class="list-entry"><span class="list-entry-name">WLO-5 Speeder Tank</span></div>
+      <div class="list-entry"><span class="list-entry-name upgrade">&nbsp;&nbsp;HQ Uplink</span></div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Luke Skywalker</span>
+        <span class="role-card-roles">Primary Obj / Board Control</span>
+      </div>
+      <p>Running as Commander Skywalker, Luke gets Board Control first because of how quickly he can extend across the board and tie up important units. He also doubles as a genuinely difficult Primary holder — his durability and key words make him one of the harder pieces in the game to actually dislodge once he's parked on an objective.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Han Solo</span>
+        <span class="role-card-roles">Kill / Board Control</span>
+      </div>
+      <p>Running as Reluctant Hero, Han projects a ton of threat with a potential 6-dice Pierce 2 profile that he can pull twice in a turn. His mobility lets him pick up activations quickly out on the flanks, which forces the opponent to condense their army rather than spread out — a real problem for them when their list wants to go wide. That dice pool also makes him a legitimate kill threat in his own right: left unchecked, he should be earning an activation and a half of value every single turn.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Din Djarin</span>
+        <span class="role-card-roles">Kill / Board Control</span>
+      </div>
+      <p>Din is arguably the best infantry killer in the game. His weapon and equipment combination means he can pick up whatever activation he wants at least once per game. With his mobility upgrades, he's also a serious Board Control piece capable of threatening deep into the opponent's deployment as early as turn 1, and his sheer lethality means he has to be respected and played around from the opening turn.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Naked Fleet Troopers</span>
+        <span class="role-card-roles">Primary / Secondary</span>
+      </div>
+      <p>These are pure value. Cheap enough that you never feel like you're losing much if they're not doing anything, but with Charge available, they can flex into a real Primary role when needed and tie up enemy units safely in melee.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Fleet Troopers w/ Cassian Andor</span>
+        <span class="role-card-roles">Primary / Kill</span>
+      </div>
+      <p>This unit is both Primary and Kill because of the sheer volume of Pierce dice it throws — enough that it kills most things it hits outright. What makes it an even better Primary holder is Cassian's ability to add a white die back for every body lost, so the squad stays both durable and dangerous; whatever hits it is usually getting deleted on the clap-back.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Fleet Troopers w/ Astromech Droid</span>
+        <span class="role-card-roles">Support / Primary</span>
+      </div>
+      <p>Similar to the naked fleet above, but built around the WLO-5 tank instead. Since it needs to stay near the tank — which is itself a Primary piece — this squad ends up contributing to the same objective while supporting the tank directly.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Rebel Troopers</span>
+        <span class="role-card-roles">Secondary / Primary</span>
+      </div>
+      <p>Same general profile as the naked Fleet Troopers, just inverted — Secondary first, Primary second. Dodge generation lets them survive at range far more easily, so they can sit back and continuously support the secondary game plan, while still being available to push for a Primary late if the list needs it.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Rebel Commandos</span>
+        <span class="role-card-roles">Secondary / Primary</span>
+      </div>
+      <p>Functionally the same role as Rebel Troopers, but more reliable thanks to their innate keywords. That reliability means they're typically tapping secondaries as early as turn 1 — something most units in the game simply can't do.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Rebel Commandos (Strike Team)</span>
+        <span class="role-card-roles">Board Control / Secondary</span>
+      </div>
+      <p>These play a similar role to the ARC Strike Teams from the first case study, but lean more into zoning than securing secondaries — this list already has enough dedicated objective pieces, so the Strike Teams are freed up to focus on board presence instead.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">Rebel Sleeper Cell</span>
+        <span class="role-card-roles">Kill / Board Control</span>
+      </div>
+      <p>The Sleeper Cell's entire job is to pop out of the WLO-5 tank and double-tap whatever it wants before dying — usually somewhere around 26 to 28 black dice once you count Aims, delivered before the opponent gets a chance to retaliate. Like Din, this is a threat that has to be respected, which creates a zoning effect that often holds all the way through the end of round 1.</p>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-head">
+        <span class="role-card-unit">WLO-5 Speeder Tank</span>
+        <span class="role-card-roles">Support / Primary</span>
+      </div>
+      <p>The Support role comes from how the tank delivers the Sleeper Cell and then, in round 2, repositions to block line of sight for the Sleeper that activated at the top of the round, maximizing its zoning potential. I usually don't even shoot with the tank in the first two rounds, since I'd rather recover HQ uplink on turn 1 and let the Sleeper Cell create more impact than a tank shot would on turn 2 if it survives the round. The tank can also split fire to knock off standbys, freeing up the sleepers to hit turn 1 without having to skirt them. The Primary role comes from the tank doing exactly what a tank is supposed to do: soak shots while sitting on an objective and blocking line of sight for the rest of the army.</p>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-label">// Closing Thought</div>
+      <p>The Rule of Two isn't about being rigid — units will always do more than their assigned roles in practice, and that's fine. The point is that before the dice ever hit the table, you already know what each piece in your list is there to do. <strong>That clarity is worth more than almost any single tech choice you could make instead.</strong></p>
+    </div>
+
+  </main>
+
+  <aside class="article-sidebar">
+    <div class="sidebar-widget">
+      <div class="widget-label">Table of Contents</div>
+      <ul class="toc-list">
+        <li class="toc-item"><a href="#five-roles">The Five Roles</a></li>
+        <li class="toc-item"><a href="#the-rule">The Rule of Two</a></li>
+        <li class="toc-item"><a href="#case-study-republic">Case Study: Republic List</a></li>
+        <li class="toc-item"><a href="#case-study-rebel">Case Study Two: Rebel List</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-widget">
+      <div class="widget-label">Share</div>
+      <div class="share-row">
+        <button class="share-btn">Copy Link</button>
+        <button class="share-btn">X / Twitter</button>
+        <button class="share-btn">Reddit</button>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ZERO HOUR LEGION</div>
+    <div class="footer-copy">&copy; 2026 ZEROHOURLEGION.COM — ALL RIGHTS RESERVED</div>
+  </div>
+</footer>
+
+<script>
+  // Lightweight starfield generator
+  const field = document.getElementById('starfield');
+  const STAR_COUNT = 90;
+  for (let i = 0; i < STAR_COUNT; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2 + 1;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.setProperty('--d', (Math.random() * 3 + 2) + 's');
+    s.style.setProperty('--delay', (Math.random() * 4) + 's');
+    s.style.setProperty('--min', (Math.random() * 0.2).toFixed(2));
+    s.style.setProperty('--max', (Math.random() * 0.4 + 0.4).toFixed(2));
+    field.appendChild(s);
+  }
+</script>
+
+</body>
+</html>
