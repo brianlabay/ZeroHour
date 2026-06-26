@@ -148,7 +148,7 @@ nav {
 /* ============================================================
    ARMY LIST CARD
    Usage: <div class="list-card"><div class="list-card-title">...</div>
-          <div class="list-entry"><span class="list-entry-name">Unit</span><span class="list-entry-pts">CMD</span></div>
+          <div class="list-entry"><span class="list-entry-name">Unit</span></div>
 ============================================================ */
 .list-card { background: var(--dark3); border: 1px solid rgba(201,168,76,0.1); padding: 1rem; margin: 1.5rem 0; }
 .list-card-title { font-family: 'Orbitron', monospace; font-size: 0.7rem; font-weight: 700; color: var(--white); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(201,168,76,0.15); }
@@ -196,8 +196,8 @@ nav {
 /* ============================================================
    SIDEBAR
 ============================================================ */
-.article-sidebar { padding-top: 0.5rem; }
-.sidebar-widget { border: 1px solid rgba(201,168,76,0.12); background: var(--dark2); padding: 1.25rem; margin-bottom: 1.5rem; position: sticky; top: 80px; }
+.article-sidebar { padding-top: 0.5rem; position: sticky; top: 80px; align-self: start; }
+.sidebar-widget { border: 1px solid rgba(201,168,76,0.12); background: var(--dark2); padding: 1.25rem; margin-bottom: 1.5rem; }
 .widget-label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(201,168,76,0.12); }
 
 /* Table of Contents */
@@ -237,3 +237,4 @@ footer { position: relative; z-index: 10; padding: 2.5rem 2rem; border-top: 1px 
   .article-sidebar { display: none; }
   .stat-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
