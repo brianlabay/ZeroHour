@@ -30,7 +30,21 @@
       border-bottom: 1px solid rgba(201,168,76,0.08);
       flex: 1;
     }
-    .faction-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .faction-icon {
+      display: block;
+      width: 2.25rem;
+      height: 2.25rem;
+      margin-bottom: 1rem;
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+    .faction-icon svg { width: 100%; height: 100%; display: block; }
+    .faction-card:hover .faction-icon { color: var(--gold); }
+    .faction-card.empire     .faction-icon { color: rgba(20,20,24,0.9); }
+    .faction-card.rebels     .faction-icon { color: rgba(192,57,43,0.85); }
+    .faction-card.republic   .faction-icon { color: #742220; }
+    .faction-card.separatist .faction-icon { color: #15155f; }
+    .faction-card.mercs      .faction-icon { color: #8a6d23; }
     .faction-card-name {
       font-family: 'Orbitron', monospace; font-size: 1rem;
       font-weight: 700; color: var(--white); margin-bottom: 0.5rem;
@@ -112,7 +126,7 @@
       <a class="faction-card empire" href="empire.html">
         <div class="live-badge">1 GUIDE LIVE</div>
         <div class="faction-card-top">
-          <span class="faction-icon">⚙️</span>
+          <span class="faction-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 600 600"><path fill-rule="evenodd" d="M 314.0,569.5 L 285.0,569.5 L 257.0,566.5 L 229.0,560.5 L 207.0,553.5 L 183.0,543.5 L 159.0,530.5 L 120.0,501.5 L 96.5,478.0 L 80.5,458.0 L 65.5,435.0 L 54.5,414.0 L 39.5,374.0 L 32.5,343.0 L 29.5,317.0 L 29.5,282.0 L 31.5,263.0 L 36.5,236.0 L 44.5,209.0 L 65.5,164.0 L 77.5,145.0 L 95.5,122.0 L 122.0,95.5 L 145.0,77.5 L 187.0,53.5 L 232.0,37.5 L 282.0,29.5 L 317.0,29.5 L 343.0,32.5 L 374.0,39.5 L 395.0,46.5 L 440.0,68.5 L 478.0,96.5 L 502.5,121.0 L 515.5,137.0 L 530.5,159.0 L 543.5,183.0 L 560.5,229.0 L 566.5,257.0 L 569.5,285.0 L 569.5,314.0 L 566.5,342.0 L 560.5,370.0 L 553.5,392.0 L 547.5,407.0 L 528.5,443.0 L 500.5,480.0 L 480.0,500.5 L 455.0,520.5 L 433.0,534.5 L 407.0,547.5 L 362.0,562.5 L 314.0,569.5 Z M 107.5,175.0 L 122.5,154.0 L 137.0,138.5 L 158.0,157.5 L 177.0,140.5 L 196.0,127.5 L 224.0,113.5 L 247.0,106.5 L 240.5,79.0 L 261.0,73.5 L 285.0,71.5 L 286.5,70.0 L 286.5,61.0 L 285.0,59.5 L 265.0,61.5 L 233.0,68.5 L 198.0,81.5 L 174.0,94.5 L 137.0,122.5 L 110.5,151.0 L 98.5,168.0 L 100.0,171.5 L 107.5,175.0 Z M 492.5,175.0 L 499.0,171.5 L 500.5,168.0 L 487.5,150.0 L 464.0,124.5 L 428.0,96.5 L 394.0,78.5 L 366.0,68.5 L 340.0,62.5 L 308.5,60.0 L 308.5,70.0 L 311.0,71.5 L 338.0,73.5 L 358.5,79.0 L 352.0,106.5 L 375.0,113.5 L 396.0,123.5 L 423.0,141.5 L 441.0,157.5 L 460.0,138.5 L 462.0,138.5 L 492.5,175.0 Z M 307.5,466.0 L 326.0,464.5 L 342.5,460.0 L 320.5,378.0 L 339.0,370.5 L 356.0,357.5 L 358.0,357.5 L 417.0,416.5 L 425.5,409.0 L 436.5,395.0 L 450.5,371.0 L 460.5,343.0 L 378.0,320.5 L 380.5,306.0 L 380.5,292.0 L 377.5,279.0 L 457.0,257.5 L 460.5,255.0 L 454.5,237.0 L 442.5,213.0 L 431.5,197.0 L 417.0,181.5 L 357.0,241.5 L 341.0,229.5 L 321.0,221.5 L 342.5,139.0 L 320.0,133.5 L 289.0,132.5 L 272.0,134.5 L 256.5,139.0 L 278.5,221.0 L 258.0,229.5 L 243.0,241.5 L 241.0,241.5 L 182.0,182.5 L 179.5,183.0 L 161.5,205.0 L 145.5,234.0 L 138.5,256.0 L 221.0,278.5 L 218.5,291.0 L 220.5,320.0 L 144.0,340.5 L 139.0,342.5 L 138.5,345.0 L 153.5,381.0 L 167.5,402.0 L 181.0,416.5 L 242.0,356.5 L 260.0,370.5 L 278.0,377.5 L 256.5,460.0 L 280.0,465.5 L 307.5,466.0 Z M 87.5,409.0 L 95.5,403.0 L 84.5,379.0 L 78.5,359.0 L 105.5,351.0 L 99.5,317.0 L 99.5,282.0 L 105.5,248.0 L 78.5,240.0 L 84.5,220.0 L 95.5,196.0 L 94.0,193.5 L 86.0,189.5 L 75.5,212.0 L 65.5,244.0 L 60.5,273.0 L 59.5,314.0 L 62.5,340.0 L 68.5,366.0 L 78.5,394.0 L 84.5,407.0 L 87.5,409.0 Z M 512.5,409.0 L 525.5,381.0 L 533.5,354.0 L 538.5,324.0 L 539.5,288.0 L 536.5,260.0 L 531.5,237.0 L 522.5,210.0 L 512.0,189.5 L 505.0,193.5 L 503.5,197.0 L 512.5,215.0 L 520.5,240.0 L 493.5,248.0 L 499.5,284.0 L 499.5,315.0 L 493.5,351.0 L 520.5,359.0 L 513.5,381.0 L 503.5,402.0 L 505.0,405.5 L 512.5,409.0 Z M 286.5,538.0 L 286.5,529.0 L 285.0,527.5 L 262.0,525.5 L 240.5,520.0 L 247.0,492.5 L 222.0,484.5 L 198.0,472.5 L 176.0,457.5 L 158.0,441.5 L 137.0,460.5 L 123.5,446.0 L 107.0,423.5 L 97.5,429.0 L 111.5,449.0 L 135.0,474.5 L 162.0,496.5 L 181.0,508.5 L 210.0,522.5 L 237.0,531.5 L 267.0,537.5 L 286.5,538.0 Z M 311.5,539.0 L 339.0,536.5 L 369.0,529.5 L 396.0,519.5 L 423.0,505.5 L 445.0,490.5 L 467.0,471.5 L 490.5,445.0 L 500.5,429.0 L 492.0,423.5 L 479.5,441.0 L 462.0,460.5 L 460.0,460.5 L 440.0,441.5 L 419.0,460.5 L 399.0,473.5 L 377.0,484.5 L 352.0,492.5 L 358.5,520.0 L 337.0,525.5 L 310.0,527.5 L 308.5,529.0 L 308.5,538.0 L 311.5,539.0 Z"/></svg></span>
           <div class="faction-card-name">Galactic Empire</div>
           <div class="faction-card-sub">Order. Efficiency. Absolute control.</div>
         </div>
@@ -124,19 +138,19 @@
 
       <a class="faction-card rebels" href="">
         <div class="faction-card-top">
-          <span class="faction-icon">⭐</span>
+          <span class="faction-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" fill="currentColor"><path d="M7.42,145.986C9.185,99.193,32.899,56.035,76.25,27.516c0.128,0.048,1.251-0.361,0.738,0.61c-3.434,3.184-65.172,76.114-8.344,133.68c0,0,29.858,28.704,53.011,1.468c0,0,22.847-29.577-0.289-74.413c0,0-5.856-14.64-26.955-23.721l16.992-18.748c0,0,14.359,6.161,25.478,22.871c0,0,0.593-17.593-12.884-36.34l26.345-29.89l26.08,29.609c0,0-11.993,16.991-12.876,36.902c0,0,8.191-13.477,25.776-23.151l16.686,18.748c0,0-16.045,5.287-26.794,23.529c-9.242,16.902-16.357,53.05,0.416,75.223c0,0,18.772,26.618,51.792-1.571c0,0,60.712-54.399-6.226-133.048c0,0-3.658-3.233,0.449-1.476c29.586,21.54,65.012,49.946,68.67,120.837c-1.444,85.966-59.012,147.334-143.074,147.334C68.934,295.968,4.95,227.283,7.42,145.986"/></svg></span>
           <div class="faction-card-name">Rebel Alliance</div>
           <div class="faction-card-sub">Hope. Sacrifice. Hit and run.</div>
         </div>
         <div class="faction-card-bottom">
-          <span class="faction-unit-count">Rebel Troopers · Pathfinders · Wookiees + more</span>
+          <span class="faction-unit-count">Rebel Troopers · Sleeper Cell · Wookiees + more</span>
           <span class="faction-card-cta">VIEW →</span>
         </div>
       </a>
 
       <a class="faction-card republic" href="">
         <div class="faction-card-top">
-          <span class="faction-icon">🔆</span>
+          <span class="faction-icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600" fill="currentColor"><circle fill="none" stroke="currentColor" stroke-width="31.8518" cx="300" cy="300" r="284.0741"/><circle cx="300" cy="300" r="93.2122"/><g id="Half"><g id="Elmt"><path d="M164.331,122.014A223.797,223.797 0 0,1 270.077,78.2125V48.1605A253.611,253.611 0 0,0 143.081,100.764Z"/><path fill="none" stroke="currentColor" stroke-width="38.881" d="M300,300v187.968"/></g><use xlink:href="#Elmt" transform="rotate(45,300,300)"/><use xlink:href="#Elmt" transform="rotate(90,300,300)"/><use xlink:href="#Elmt" transform="rotate(135,300,300)"/></g><use xlink:href="#Half" transform="rotate(180,300,300)"/></svg></span>
           <div class="faction-card-name">Galactic Republic</div>
           <div class="faction-card-sub">Courage. Discipline. For the Republic.</div>
         </div>
@@ -148,7 +162,7 @@
 
       <a class="faction-card separatist" href="">
         <div class="faction-card-top">
-          <span class="faction-icon">⬡</span>
+          <span class="faction-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 360 312"><path fill-rule="evenodd" d="M 203.5,103.0 L 254.0,15.5 L 104.5,16.0 L 156.0,103.5 L 203.5,103.0 Z M 122.5,150.0 L 146.5,108.0 L 111.5,49.0 L 101.5,30.0 L 96.5,22.0 L 95.0,21.5 L 20.5,150.0 L 122.5,150.0 Z M 338.5,150.0 L 268.5,28.0 L 265.5,23.0 L 263.0,21.5 L 212.5,108.0 L 233.5,146.0 L 237.0,150.5 L 338.5,150.0 Z M 96.5,289.0 L 146.5,203.0 L 125.5,165.0 L 122.0,160.5 L 21.0,160.5 L 22.5,165.0 L 93.5,288.0 L 95.0,289.5 L 96.5,289.0 Z M 264.5,289.0 L 324.5,186.0 L 338.0,160.5 L 237.0,160.5 L 226.5,177.0 L 212.5,203.0 L 260.5,286.0 L 263.0,289.5 L 264.5,289.0 Z M 254.5,295.0 L 203.0,207.5 L 156.0,207.5 L 104.5,295.0 L 254.5,295.0 Z"/></svg></span>
           <div class="faction-card-name">Separatist Alliance</div>
           <div class="faction-card-sub">Numbers. Relentless. Expendable.</div>
         </div>
@@ -160,7 +174,7 @@
 
       <a class="faction-card mercs" href="">
         <div class="faction-card-top">
-          <span class="faction-icon">💰</span>
+          <span class="faction-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 2000 2000"><path fill-rule="evenodd" d="M 1102.0,986.5 L 879.5,986.0 L 888.0,410.5 L 827.0,410.5 L 721.5,570.0 L 714.5,963.0 L 389.5,963.0 L 710.0,180.5 L 957.5,182.0 L 953.5,525.0 L 963.5,549.0 L 977.0,560.5 L 992.0,565.5 L 1010.0,564.5 L 1023.0,558.5 L 1038.5,542.0 L 1043.5,527.0 L 1047.5,182.0 L 1326.0,180.5 L 1328.5,185.0 L 1590.5,963.0 L 1277.5,963.0 L 1283.5,581.0 L 1180.0,410.5 L 1111.0,410.5 L 1102.0,986.5 Z M 924.0,1845.5 L 649.5,1845.0 L 387.5,1070.0 L 713.5,1070.0 L 706.5,1463.0 L 803.0,1621.5 L 870.0,1621.5 L 879.5,1032.0 L 1101.0,1031.5 L 1092.5,1620.0 L 1173.0,1621.5 L 1269.5,1474.0 L 1275.5,1070.0 L 1584.0,1069.5 L 1269.5,1844.0 L 1024.5,1844.0 L 1028.5,1467.0 L 1022.5,1452.0 L 1011.0,1439.5 L 994.0,1431.5 L 981.0,1430.5 L 955.0,1441.5 L 945.5,1452.0 L 939.5,1467.0 L 934.5,1844.0 L 924.0,1845.5 Z"/></svg></span>
           <div class="faction-card-name">Mercenaries</div>
           <div class="faction-card-sub">Credits. Contracts. No allegiances.</div>
         </div>
