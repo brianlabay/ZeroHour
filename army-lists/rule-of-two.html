@@ -345,9 +345,9 @@
     <div class="sidebar-widget">
       <div class="widget-label">Share</div>
       <div class="share-row">
-        <button class="share-btn">Copy Link</button>
-        <button class="share-btn">X / Twitter</button>
-        <button class="share-btn">Reddit</button>
+            <button class="share-btn" id="copy-link-btn" onclick="copyPageLink(this)">Copy Link</button>
+            <button class="share-btn" onclick="shareToTwitter()">X / Twitter</button>
+            <button class="share-btn" onclick="shareToReddit()">Reddit</button>
       </div>
     </div>
   </aside>
@@ -379,7 +379,50 @@
     s.style.setProperty('--max', (Math.random() * 0.4 + 0.4).toFixed(2));
     field.appendChild(s);
   }
+
+  // Share widget functionality
+function copyPageLink(btn) {
+  const url = window.location.href;
+  const originalText = btn.textContent;
+
+  const fallbackCopy = () => {
+    const temp = document.createElement('textarea');
+    temp.value = url;
+    temp.style.position = 'fixed';
+    temp.style.opacity = '0';
+    document.body.appendChild(temp);
+    temp.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      console.error('Copy failed:', err);
+    }
+    document.body.removeChild(temp);
+  };
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(url).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+
+  btn.textContent = 'Copied!';
+  setTimeout(() => { btn.textContent = originalText; }, 1800);
+}
+
+function shareToTwitter() {
+  const url = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent(document.title);
+  window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'noopener,noreferrer');
+}
+
+function shareToReddit() {
+  const url = encodeURIComponent(window.location.href);
+  const title = encodeURIComponent(document.title);
+  window.open(`https://www.reddit.com/submit?url=${url}&title=${title}`, '_blank', 'noopener,noreferrer');
+}
 </script>
+  
 
 </body>
 </html>
