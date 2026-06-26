@@ -20,6 +20,10 @@
   .list-card { margin-bottom: 2.5rem; }
   .list-entry-name { font-size: 0.8rem; }
   .list-entry-name.upgrade { color: var(--text-dim); font-size: 0.75rem; }
+
+  /* Hero image override — center as a constrained block instead of full-width edge-to-edge */
+  .article-hero-image { max-width: 700px; margin: 0 auto; }
+  .article-hero-image img { object-position: center center; }
 </style>
 </head>
 <body>
@@ -68,9 +72,14 @@
   </div>
 </header>
 
+<!-- ============================================================
+     HERO IMAGE — drop your image in here
+     Replace src="IMAGE_HERE.jpg" with your file path/filename,
+     and update the alt text + credit to match.
+============================================================ -->
 <div class="article-hero-image">
-        <img src="../assets/images/rule of two.jpg" alt="Rule of Two - Darth Maul and Darth Sideous">
-         <div class="image-credit">© Lucasfilms</div>
+  <img src="IMAGE_HERE.jpg" alt="Describe the image here">
+  <div class="image-credit">PHOTO CREDIT / SOURCE</div>
 </div>
 
 
